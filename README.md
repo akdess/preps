@@ -8,7 +8,9 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 The workflow of PREPS starts from the tokenization of the gene expression matrices of all datasets. 
   
 ### Tokenization
-PREPS loads [file_name].h5ad file
+**tokenize.py**
+- This script loads `[file_name].h5ad`, converts it into the intermediate `[file_name].loom`, and tokenized 
+#### Usage
 
 ### Fine-tuning
 
