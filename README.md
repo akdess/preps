@@ -9,8 +9,11 @@ The workflow of PREPS starts from the tokenization of the gene expression matric
   
 ### Tokenization
 **tokenize.py**
-- This script loads `[file_name].h5ad`, converts it into the intermediate `[file_name].loom`, and tokenized 
-#### Usage
+- This script loads `[file_name].h5ad`, converts it into an intermediate `[file_name].loom`, and tokenizes `[file_name].loom`, saving as a folder `[file_name].dataset`.
+- The expression values in `[file_name].h5ad` should be raw read counts without processing.
+- Genes in `[file_name].h5ad` should be kept as original without filtering. 
+- Genes in `[file_name].h5ad` should be named with Ensembl IDs instead of gene symbols.
+**Usage**
 
 ### Fine-tuning
 
