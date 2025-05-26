@@ -5,22 +5,22 @@ The microenvironment of glioma is heterogeneous, including tumor cells, neurons,
 In the first step of PREPS, leveraging the foundational GPT model, Geneformer, which has captured the complexity within human gene networks based on a broad range of healthy tissues, we **fine-tuned** the model into a series of brain-specific cell type classifiers using the transcriptomes of various developing brain and glioma datasets. Besides clustering and annotating glioma cells, we extracted and concatenated **embeddings** from the intermediate layers of these classifiers to represent the comprehensive transcriptomic features of each cell. Next, we built a group of predictive Elastic Nets (i.e., PREPS models) that **map** the electrophysiological features of glioma cells to their embeddings, with models optimized through a systematic grid search of all parameter combinations. Finally, we applied PREPS models to **predict** electrophysiological features of a larger amount of glioma data, where conducting many Patch-seq experiments is time-consuming and labor-intensive. 
   
 ## Application
-With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **data conversion**, **tokenization**, **cell-embedding extraction**, and **electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
+With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Cell-embedding extraction**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
   
-### Data conversion
-Suppose 
+### (1) Data conversion
+Suppose the scRNA-seq dataset `[seuratObj].rda` is saved in the `./mouse/` directory. 
 ```
 library(Matrix)
 library(Seurat)
 
 load("mouse/malcolm_rao_cx3cr1_mouse_032525_seuratObj_ann.rda")
-write.table(seuratObj@meta.data, file = 'mouse/meta.tsv', 
-            sep = '\t', row.names = T, col.names = T, quote = F)
-writeMM(seuratObj@assays$RNA@layers$counts, file = 'mouse/matrix.mtx')
-write.table(rownames(seuratObj), file = 'mouse/genes.tsv', 
-            sep = '\t', row.names = F, col.names = F, quote = F)
-write.table(colnames(seuratObj), file = 'mouse/barcodes.tsv', 
-            sep = '\t', row.names = F, col.names = F, quote = F)
+write.table(seuratObj@meta.data, file = "mouse/meta.tsv", 
+            sep = "\t", row.names = T, col.names = T, quote = F)
+writeMM(seuratObj@assays$RNA@layers$counts, file = "mouse/matrix.mtx")
+write.table(rownames(seuratObj), file = "mouse/genes.tsv", 
+            sep = "\t", row.names = F, col.names = F, quote = F)
+write.table(colnames(seuratObj), file = "mouse/barcodes.tsv", 
+            sep = "\t", row.names = F, col.names = F, quote = F)
 ```
 
 ### Tokenization
