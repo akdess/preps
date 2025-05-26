@@ -8,7 +8,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Cell-embedding extraction**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
   
 ### (1) Data conversion
-Suppose the scRNA-seq dataset `[seuratObj].rda` is saved in the `./mouse/` directory. 
+Suppose the scRNA-seq dataset `[seuratObj].rda` is located in the `./mouse/` directory. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv` in the same directory.
 ```
 library(Matrix)
 library(Seurat)
@@ -22,6 +22,9 @@ write.table(rownames(seuratObj), file = "mouse/genes.tsv",
 write.table(colnames(seuratObj), file = "mouse/barcodes.tsv", 
             sep = "\t", row.names = F, col.names = F, quote = F)
 ```
+**Note**
+- In `meta.tsv`, the `colname` of cell IDs (i.e., barcodes) should be `CellID`.
+- In `matrix.mtx`, raw read counts should be saved instead of processed or scaled data.
 
 ### Tokenization
 **tokenize.py**
