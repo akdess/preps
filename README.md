@@ -35,16 +35,11 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - Genes in `[file_name].h5ad` should be named with Ensembl IDs instead of gene symbols.
 **Usage**
 
-### Fine-tuning
+
+### (3) Cell-embedding extraction
 
 
-### Annotation
-
-
-### PREPS model training
-
-
-### Electrophysiological feature prediction
+### (4) Electrophysiological feature prediction
 
 ## Installation
 
