@@ -45,6 +45,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (3) Annotation
 #### annotate.py
+- This script
 
 #### Usage
 `$ python annotate.py [name] --gpu [gpu]`
@@ -54,7 +55,22 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
   
 `$ python annotate.py glioma -g 2`
 
+#### Note
+- 
+
 ### (4) Electrophysiological feature prediction
+#### patchseq_predict.py
+
+#### Usage
+`$ python patchseq_predict.py [name] --models [models]`
+
+#### Examples
+`$ python patchseq_predict.py mouse -m patchseq`
+  
+`$ python patchseq_predict.py glioma -m allen`
+
+#### Note
+- 
 
 ## Installation
 
