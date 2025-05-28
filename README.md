@@ -33,13 +33,13 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
   
 **Usage**
   
-`python tokenize.py [name] --species [species]`
+`$ python tokenize.py [name] --species [species]`
   
 **Examples**
   
-`python tokenize.py mouse -s mouse`
+`$ python tokenize.py mouse -s mouse`
   
-`python tokenize.py glioma -s human`
+`$ python tokenize.py glioma -s human`
   
 **Note**
 - `adata.h5ad` or `matrix.mtx` should be ***raw read counts***.
