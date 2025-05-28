@@ -54,11 +54,11 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 #### Examples
 `$ python annotate.py mouse -g 0`
   
-`$ python annotate.py glioma -g 2`
+`$ python annotate.py glioma -g 3`
 
 #### Note
 - Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
-- 
+- Each fine-tuned GPT model should have been saved in the current directory (e.g., ./aldinger_2000perCellType, ./bhaduri_3000perCellType).
 
 ### (4) Electrophysiological feature prediction
 #### patchseq_predict.py
