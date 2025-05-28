@@ -46,7 +46,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 ### (3) Annotation
 #### annotate.py
 - This script loads the tokenized folder `[name].dataset` from the current directory, extracts cell embeddings, and annotates cell types using fine-tuned GPT models, saving the results in a new folder `./[name]_preds/`.
-- Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `tokenized_copy.dataset` in `./[name]_preds/` to keep `[name].dataset` clean for future use.
+- Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `./[name]_preds/tokenized_copy.dataset` to keep `[name].dataset` clean for future use.
 
 #### Usage
 `$ python annotate.py [name] --gpu [gpu]`
