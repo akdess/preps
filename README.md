@@ -8,7 +8,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Cell-embedding extraction**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
   
 ### (1) Data conversion
-If the scRNA-seq dataset `adata.h5ad` is available, this step can be skipped. Otherwise, suppose `[seuratObj].rda` is in the `./mouse/` directory. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
+If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the `./mouse/` directory. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
 ```
 library(Matrix)
 library(Seurat)
@@ -24,17 +24,23 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 ```
 **Note**
 - In `meta.tsv`, the `colname` of cell IDs (i.e., barcodes) should be `CellID`.
-- In `matrix.mtx`, **raw read counts** should be saved instead of processed or scaled data.
+- In `matrix.mtx`, ***raw read counts*** should be saved instead of processed or scaled data.
 
 ### (2) Tokenization
-
 **tokenize.py**
-- This script loads `[file_name].h5ad`, converts it into an intermediate `[file_name].loom`, and tokenizes `[file_name].loom`, saving as a folder `[file_name].dataset`.
-- The expression values in `[file_name].h5ad` should be raw read counts without processing.
-- Genes in `[file_name].h5ad` should be kept as original without filtering. 
-- Genes in `[file_name].h5ad` should be named with Ensembl IDs instead of gene symbols.
+- This script loads `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving as a folder `[name].dataset`.
+- Human or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
+  
 **Usage**
-
+`python tokenize.py [name] --species [species]`
+  
+**Examples**
+`python tokenize.py mouse -s mouse`
+`python tokenize.py glioma -s human`
+  
+**Note**
+- `adata.h5ad` or `matrix.mtx` should be ***raw read counts***.
+- Keep all genes and ***do not filter***.
 
 ### (3) Cell-embedding extraction
 
