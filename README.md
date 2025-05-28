@@ -8,7 +8,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
   
 ### (1) Data conversion
-If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the `./mouse/` directory. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
+If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the directory `./mouse/`. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
 ```
 library(Matrix)
 library(Seurat)
@@ -28,7 +28,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (2) Tokenization
 #### tokenize.py
-- This script loads `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving as a folder `[name].dataset`.
+- This script loads the scRNA-seq dataset `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving the results in a new folder `./[name]/[name].dataset/`.
 - Human or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 #### Usage
@@ -45,7 +45,8 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (3) Annotation
 #### annotate.py
-- This script
+- This script loads the tokenized folder `[name].dataset` from the current directory, extracts cell embeddings, and annotates cell types using fine-tuned GPT models, saving the results in a new folder `./[name]_preds/`.
+- Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `tokenized_copy.dataset` in `./[name]_preds/` to keep `[name].dataset` clean for future use.
 
 #### Usage
 `$ python annotate.py [name] --gpu [gpu]`
@@ -56,6 +57,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python annotate.py glioma -g 2`
 
 #### Note
+- Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
 - 
 
 ### (4) Electrophysiological feature prediction
