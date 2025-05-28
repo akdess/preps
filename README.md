@@ -22,26 +22,24 @@ write.table(rownames(seuratObj), file = "mouse/genes.tsv",
 write.table(colnames(seuratObj), file = "mouse/barcodes.tsv", 
             sep = "\t", row.names = F, col.names = F, quote = F)
 ```
-**Note**
+#### Note
 - In `meta.tsv`, the `colname` of cell IDs (i.e., barcodes) should be `CellID`.
 - In `matrix.mtx`, ***raw read counts*** should be saved instead of processed or scaled data.
 
 ### (2) Tokenization
-**tokenize.py**
+#### tokenize.py
 - This script loads `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving as a folder `[name].dataset`.
 - Human or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
-**Usage**
-  
+#### Usage
 `$ python tokenize.py [name] --species [species]`
   
-**Examples**
-  
+#### Examples
 `$ python tokenize.py mouse -s mouse`
   
 `$ python tokenize.py glioma -s human`
   
-**Note**
+#### Note
 - `adata.h5ad` or `matrix.mtx` should contain ***raw read counts***.
 - Keep all genes and ***do not filter***.
 
