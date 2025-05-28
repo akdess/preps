@@ -58,7 +58,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 #### Note
 - Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
-- Each fine-tuned GPT model should have been saved in the ***current*** directory (e.g., ./aldinger_2000perCellType, ./bhaduri_3000perCellType).
+- Each fine-tuned GPT model should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[name]_preds/tokenized_copy.dataset` can be deleted afterwards.
 
 ### (4) Electrophysiological feature prediction
