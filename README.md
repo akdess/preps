@@ -42,7 +42,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python tokenize.py glioma -s human`
   
 **Note**
-- `adata.h5ad` or `matrix.mtx` should be ***raw read counts***.
+- `adata.h5ad` or `matrix.mtx` should contain ***raw read counts***.
 - Keep all genes and ***do not filter***.
 
 ### (3) Cell-embedding extraction
