@@ -32,10 +32,13 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - Human or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 **Usage**
+  
 `python tokenize.py [name] --species [species]`
   
 **Examples**
+  
 `python tokenize.py mouse -s mouse`
+  
 `python tokenize.py glioma -s human`
   
 **Note**
