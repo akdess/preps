@@ -63,7 +63,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 ### (3) Annotation
 #### annotate.py
 - This script loads the tokenized folder `[name].dataset` from the current directory, extracts cell embeddings, and annotates cell types using fine-tuned GPT models, saving the results in a new folder `./[name]_preds/`.
-- Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `./[name]_preds/tokenized_copy.dataset` to keep `[name].dataset` clean for future use.
+- Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `./[name]_preds/tokenized_copy.dataset` to keep `[name].dataset` clean for future use, similar to `finetune.py`.
 
 #### Usage
 `$ python annotate.py [gpu] [name]`
@@ -74,7 +74,6 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python annotate.py 1 glioma`
 
 #### Notes
-- Run `$ nvidia-smi` first to select an idle `[gpu]` with low Memory-Usage and GPU-Utility.
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[name]_preds/tokenized_copy.dataset` can be deleted afterwards.
 
