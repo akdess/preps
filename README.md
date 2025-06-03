@@ -18,7 +18,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 `$ python finetune.py 1 bhaduri_3000perCellType`
 
 #### Note
-- Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
+- Run `$ nvidia-smi` first to select an idle `[gpu]` with low Memory-Usage and GPU-Utility.
 - The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[name]/[name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
   
 ## Application
@@ -74,7 +74,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python annotate.py 1 glioma`
 
 #### Note
-- Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
+- Run `$ nvidia-smi` first to select an idle `[gpu]` with low Memory-Usage and GPU-Utility.
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[name]_preds/tokenized_copy.dataset` can be deleted afterwards.
 
