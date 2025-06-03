@@ -19,7 +19,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 
 #### Note
 - Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
-- The reference dataset should have been tokenized using `tokenize.py` and saved as `./[name]/[name].dataset`. See **Application - (2) Tokenization**.
+- The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[name]/[name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
   
 ## Application
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
