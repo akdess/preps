@@ -3,6 +3,23 @@ The microenvironment of glioma is heterogeneous, including tumor cells, neurons,
   
 ## Methodology
 In the first step of PREPS, leveraging the foundational GPT model, Geneformer, which has captured the complexity within human gene networks based on a broad range of healthy tissues, we **fine-tuned** the model into a series of brain-specific cell type classifiers using the transcriptomes of various developing brain and glioma datasets. Besides clustering and annotating glioma cells, we extracted and concatenated **embeddings** from the intermediate layers of these classifiers to represent the comprehensive transcriptomic features of each cell. Next, we built a group of predictive Elastic Nets (i.e., PREPS models) that **map** the electrophysiological features of glioma cells to their embeddings, with models optimized through a systematic grid search of all parameter combinations. Finally, we applied PREPS models to **predict** electrophysiological features of a larger amount of glioma data, where conducting many Patch-seq experiments is time-consuming and labor-intensive. 
+
+### Fine-tuning
+#### finetune.py
+- This script fine-tunes the fundamental GPT model loaded from the directory `./Geneformer/` for a more specific context using a single reference dataset `./[name]/[name].dataset`.
+- The fine-tuned model will be saved in the folder `./[name]/finetune`.
+
+#### Usage
+`$ python finetune.py [gpu] [name]`
+
+#### Examples
+`$ python finetune.py 0 aldinger_2000perCellType`
+  
+`$ python finetune.py 1 bhaduri_3000perCellType`
+
+#### Note
+- Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
+- The reference dataset should have been tokenized using `tokenize.py` and saved as `./[name]/[name].dataset`. See **Application - (2) Tokenization**.
   
 ## Application
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
@@ -58,7 +75,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 #### Note
 - Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
-- Each fine-tuned GPT model should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
+- Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[name]_preds/tokenized_copy.dataset` can be deleted afterwards.
 
 ### (4) Electrophysiological feature prediction
@@ -74,6 +91,8 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 #### Note
 - 
+
+
 
 ## Installation
 
