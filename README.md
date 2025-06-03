@@ -49,12 +49,12 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - Loading `[name].dataset` generates many temporary files within the folder. This script creates and works with `./[name]_preds/tokenized_copy.dataset` to keep `[name].dataset` clean for future use.
 
 #### Usage
-`$ python annotate.py [name] --gpu [gpu]`
+`$ python annotate.py [gpu] [name]`
 
 #### Examples
-`$ python annotate.py mouse -g 0`
+`$ python annotate.py 0 mouse`
   
-`$ python annotate.py glioma -g 3`
+`$ python annotate.py 1 glioma`
 
 #### Note
 - Run `$ nvidia-smi` first to select an idle GPU with low Memory-Usage and GPU-Utility.
