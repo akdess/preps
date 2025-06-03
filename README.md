@@ -17,7 +17,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
   
 `$ python finetune.py 1 bhaduri_3000perCellType`
 
-#### Note
+#### Notes
 - Run `$ nvidia-smi` first to select an idle `[gpu]` with low Memory-Usage and GPU-Utility.
 - The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[name]/[name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
   
@@ -39,7 +39,7 @@ write.table(rownames(seuratObj), file = "mouse/genes.tsv",
 write.table(colnames(seuratObj), file = "mouse/barcodes.tsv", 
             sep = "\t", row.names = F, col.names = F, quote = F)
 ```
-#### Note
+#### Notes
 - In `meta.tsv`, the `colname` of cell IDs (i.e., barcodes) should be `CellID`.
 - In `matrix.mtx`, ***raw read counts*** should be saved instead of processed or scaled data.
 
@@ -56,7 +56,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
   
 `$ python tokenize.py glioma -s human`
   
-#### Note
+#### Notes
 - `adata.h5ad` or `matrix.mtx` should contain ***raw read counts***.
 - Keep all genes and ***do not filter***.
 
@@ -73,7 +73,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
   
 `$ python annotate.py 1 glioma`
 
-#### Note
+#### Notes
 - Run `$ nvidia-smi` first to select an idle `[gpu]` with low Memory-Usage and GPU-Utility.
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[name]_preds/tokenized_copy.dataset` can be deleted afterwards.
@@ -89,7 +89,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
   
 `$ python patchseq_predict.py glioma -m allen`
 
-#### Note
+#### Notes
 - 
 
 
