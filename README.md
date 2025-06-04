@@ -46,7 +46,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 ### (2) Tokenization
 #### tokenize.py
 - This script loads the scRNA-seq dataset `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving the results in a new folder `./[name]/[name].dataset/`.
-- Human (default `[species]`) or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
+- Human (the default `[species]`) or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 #### Usage
 `$ python tokenize.py [name] --species [species]`
@@ -79,6 +79,8 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (4) Electrophysiological feature prediction
 #### patchseq_predict.py
+- This script loads the pre-trained PREPS `[models]` (default `patchseq`) to predict the electrophysiological features of the dataset `[name]` based on its cell embeddings loaded from the directory `./[name]_preds/`.
+- The predicted features are saved in the directory `./[name]_[models]/`.
 
 #### Usage
 `$ python patchseq_predict.py [name] --models [models]`
@@ -89,7 +91,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python patchseq_predict.py glioma -m allen`
 
 #### Notes
-- 
+- The PREPS models with parameters grid-searched have been saved in the directories `./combined_patchseq_all_preds/` and `./allen_preds/`. ***Do not change*** the folder or file names that contain keys to identify the optimal model for each feature prediction.
 
 
 
