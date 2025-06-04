@@ -1,5 +1,13 @@
+import argparse
+parser = argparse.ArgumentParser(description='Annotate one dataset using fine-tuned models. Output cell embeddings (_preds.csv) and cell-type scores (_scores.csv).')
+parser.add_argument('gpu_name', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
+parser.add_argument('test_name', help='Input the test dataset to be annotated (e.g., mouse, glioma).')
+args = parser.parse_args()
+gpu_name = args.gpu_name
+test_name = args.test_name
+
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = gpu_name
 os.environ["NCCL_DEBUG"] = "INFO"
 
 from datasets import load_from_disk
@@ -16,7 +24,6 @@ import pandas as pd
 from tqdm import tqdm
 
 
-test_name = 'WHB-10Xv3-Neurons-raw'
 output_directory = f'{test_name}_preds/'
 os.mkdir(output_directory)
 shutil.copytree(f'{test_name}.dataset', output_directory + 'tokenized_copy.dataset')

@@ -1,26 +1,7 @@
-# Fine-tune a pre-trained foundamental Geneformer-based model towards a more specific context using one tokenized dataset
-
-# Command
-# $ python finetune.py [gpu_name] [ref_name]
-
-# Example
-# $ python finetune.py 0 aldinger_2000perCellType
-
-# Command parameter instructions
-# The first parameter [gpu_name] designates on which single GPU to run the code, can be 0, 1, 2 ... if there are 1, 2, 3 ... GPUs installed on server 
-# Usually, run "$ nvidia-smi" before this script to see which GPUs are idle, and select one with both low Memory-Usage and low GPU-Util
-
-# The second parameter [ref_name] designates on which single dataset to fine-tune the model, by default the foundamental model in the directory "./Geneformer/"
-# The dataset must have been tokenized and saved as "./[ref_name]/[ref_name].dataset", for example "./aldinger_2000perCellType/aldinger_2000perCellType.dataset"  
-
-# Output
-# The fine-tuned model will be saved as "./[ref_name]/finetune" along side "./[ref_name]/[ref_name].dataset"
-# The code has been organized for easy execution and barely needs changes except for the two command parameters 
-
 import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('gpu_name')
-parser.add_argument('ref_name')
+parser = argparse.ArgumentParser(description='Fine-tune a pre-trained Geneformer model for a more specific context using a single tokenized dataset.')
+parser.add_argument('gpu_name', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
+parser.add_argument('ref_name', help='Input the reference dataset on which to fine-tune the model (e.g., aldinger_2000perCellType, bhaduri_3000perCellType).')
 args = parser.parse_args()
 gpu_name = args.gpu_name
 ref_name = args.ref_name
