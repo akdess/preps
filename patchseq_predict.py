@@ -14,7 +14,7 @@ np.random.seed(0)
 
 parser = argparse.ArgumentParser(description='Electrophysiological feature prediction.')
 parser.add_argument('name', help='Input the name of the dataset to be predicted (e.g., mouse, glioma).')
-parser.add_argument('-m', '--models', choices=['patchseq', 'allen'], default='patchseq', help='Input -m patchseq or -m allen to designate models (default patchseq).')
+parser.add_argument('-m', '--models', choices=['patchseq', 'allen', 'celltype'], default='patchseq', help='Input -m patchseq or -m allen to designate models (default patchseq).')
 
 args = parser.parse_args()
 name = args.name
@@ -48,7 +48,7 @@ if models == 'allen':
                 ['all ephys ElasticNet_emb_layer_preds/', 'prediction of AP amplitude (mV) (Allen model) by embs alpha 0.3 l1_ratio 0.95 positive False MAE 5.892.joblib'], 
                 ['all ephys ElasticNet_emb_layer_preds/', 'prediction of Latency (ms) (Allen model)_log by embs alpha 0.8 l1_ratio 0.05 positive False MAE 59.476.joblib'], 
                 ['all ephys ElasticNet_emb_layer_scores/', 'prediction of Input resistance (MOhm) (Allen model)_log by embs alpha 0.05 l1_ratio 0.0 positive False MAE 29.347.joblib']]
-else:
+elif models == 'patchseq':
     ref_embs_directory = 'combined_patchseq_all_preds/'
     model_tups = [['Fitted MP (mV) AP threshold (mV) Afterhyperpolarization (mV) ElasticNet_emb_layer_preds/', 'prediction of Fitted MP (mV) by embs alpha 0.95 l1_ratio 0.0 MAE 17.014.joblib'], 
                 ['Fitted MP (mV) AP threshold (mV) Afterhyperpolarization (mV) ElasticNet_emb_layer_preds/', 'prediction of AP threshold (mV) by pcs alpha 0.95 l1_ratio 0.7 MAE 8.599.joblib'], 
@@ -62,6 +62,10 @@ else:
                 ['ISI adaptation index ElasticNet_emb_layer_preds/', 'prediction of ISI adaptation index by embs alpha 0.15 l1_ratio 0.75 MAE 0.457.joblib'], 
                 ['Rheobase (pA) Sag ratio Membrane time constant (ms) ElasticNet_emb_layer_scores/', 'prediction of Membrane time constant (ms)_log by embs alpha 0.1 l1_ratio 0.05 MAE 16.943.joblib']]
 
+else:
+    ref_embs_directory = 'combined_patchseq_all_preds/'
+    model_tups = [['CellTypeLogisticRegression_emb_layer_preds/', 'prediction of Cell Type by embs C 0.04 l1_ratio 0.05 acc 0.7058823529411765.joblib']]
+
 for model_directory, model_name in tqdm(model_tups):
     assert len(model_name.split(' by ')) == 2
     y_name = model_name.split(' by ')[0].replace('prediction of ', '')
@@ -72,6 +76,8 @@ for model_directory, model_name in tqdm(model_tups):
     scaler = load(ref_embs_directory + model_directory + 'scaler.joblib')
     pca = load(ref_embs_directory + model_directory + 'pca.joblib')
     model = load(ref_embs_directory + model_directory + model_name)
+    if models == 'celltype':
+        label_encoder = load(ref_embs_directory + model_directory + 'label_encoder.joblib')
 
     embs_directory = f'{name}_preds/'
     emb_layer = model_directory.split('_')[-1].replace('/', '')
@@ -118,6 +124,9 @@ for model_directory, model_name in tqdm(model_tups):
         y_predict = np.exp(y_predict) - 1
         y_name = y_name.replace('_log', '')
 
+    if models == 'celltype':
+        y_predict = label_encoder.inverse_transform(y_predict)
+    
     df = pd.DataFrame({y_name: y_predict}, index=df_merged.index.tolist())
     df.index.name = 'cells'
     df.to_excel(output_directory + f'{y_name}.xlsx')
