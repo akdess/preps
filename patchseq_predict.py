@@ -129,4 +129,4 @@ for model_directory, model_name in tqdm(model_tups):
     
     df = pd.DataFrame({y_name: y_predict}, index=df_merged.index.tolist())
     df.index.name = 'cells'
-    df.to_csv(output_directory + f'{y_name}.csv', sep=',')
+    df.to_excel(output_directory + f'{y_name}.xlsx')
