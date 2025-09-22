@@ -10,16 +10,16 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 - The fine-tuned model will be saved in the folder `./[ref_name]/finetune`.
 
 #### Usage
-`$ python finetune.py [gpu_name] [ref_name]`
+`$ python finetune.py [ref_name] --gpu_name [gpu_name]`
 
 #### Examples
-`$ python finetune.py 0 aldinger_2000perCellType`
+`$ python finetune.py aldinger_2000perCellType`
   
-`$ python finetune.py 1 bhaduri_3000perCellType`
+`$ python finetune.py bhaduri_3000perCellType -g 2`
 
 #### Notes
-- Run `$ nvidia-smi` first to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility.
 - The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[ref_name]/[ref_name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
+- Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default 0.
   
 ## Application
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
@@ -66,12 +66,12 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - Loading `[test_name].dataset` generates many temporary files within the folder. This script creates and works with `./[test_name]_preds/tokenized_copy.dataset` to keep `[test_name].dataset` clean for future use, similar to `finetune.py`.
 
 #### Usage
-`$ python annotate.py [gpu_name] [test_name]`
+`$ python annotate.py [test_name] --gpu_name [gpu_name]`
 
 #### Examples
-`$ python annotate.py 0 mouse`
+`$ python annotate.py mouse`
   
-`$ python annotate.py 1 glioma`
+`$ python annotate.py glioma -g 1`
 
 #### Notes
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
