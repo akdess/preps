@@ -45,11 +45,11 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (2) Tokenization
 #### tokenize.py
-- This script loads the scRNA-seq dataset `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[name]/`, converts them into an intermediate `[name].loom`, and tokenizes `[name].loom`, saving the results in a new folder `./[name]/[name].dataset/`.
+- This script loads the scRNA-seq dataset `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[test_name]/`, converts them into an intermediate `[test_name].loom`, and tokenizes `[test_name].loom`, saving the results in a new folder `./[test_name]/[test_name].dataset/`.
 - Human (the default `[species]`) or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 #### Usage
-`$ python tokenize.py [name] --species [species]`
+`$ python tokenize.py [test_name] --species [species]`
   
 #### Examples
 `$ python tokenize.py mouse -s mouse`
