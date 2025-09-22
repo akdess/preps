@@ -79,11 +79,11 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (4) Electrophysiological feature prediction
 #### patchseq_predict.py
-- This script loads the pre-trained PREPS `[models]` (default `patchseq`) to predict the electrophysiological features of the dataset `[name]` based on its cell embeddings loaded from the directory `./[name]_preds/`.
-- The predicted features are saved in the directory `./[name]_[models]/`.
+- This script loads the pre-trained PREPS `[models]` (default `patchseq`) to predict the electrophysiological features of the dataset `[test_name]` based on its cell embeddings loaded from the directory `./[test_name]_preds/`.
+- The predicted features are saved in the directory `./[test_name]_[models]/`.
 
 #### Usage
-`$ python patchseq_predict.py [name] --models [models]`
+`$ python patchseq_predict.py [test_name] --models [models]`
 
 #### Examples
 `$ python patchseq_predict.py mouse -m patchseq`
