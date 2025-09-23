@@ -22,9 +22,23 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 - Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
   
 ## Application
-With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Starting from an input `[seuratObj].rda`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
+With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature/celltype prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
+
+### Single-script whole workflow
+#### preps.py
+
+#### Usage
+`$ python preps.py [test_name] --species [species] --gpu_name [gpu_name] --models [models]`
+
+#### Examples
+`$ python preps.py mouse -s mouse -g 0 -m patchseq`
   
-### (1) Data conversion
+`$ python preps.py glioma -s human -g 1 -m celltype`
+
+#### Notes
+- The parameter options are the same settings as in the separate scripts, where more detailed instructions are provided.
+  
+### Separate scripts: (1) Data conversion
 If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the directory `./mouse/`. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
 ```
 library(Matrix)
@@ -45,7 +59,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (2) Tokenization
 #### tokenize.py
-- This script loads the scRNA-seq dataset `adata.h5ad` or {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[test_name]/`, converts them into an intermediate `[test_name].loom`, and tokenizes `[test_name].loom`, saving the results in a new folder `./[test_name]/[test_name].dataset/`.
+- This script loads the scRNA-seq data `adata.h5ad` or the equivalent set {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[test_name]/`, converts them into an intermediate `[test_name].loom`, and tokenizes `[test_name].loom`, saving the results in a new folder `./[test_name]/[test_name].dataset/`.
 - Human (the default `[species]`) or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 #### Usage
@@ -77,10 +91,10 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
 - `./[test_name]_preds/tokenized_copy.dataset` can be deleted afterwards.
 
-### (4) Electrophysiological feature prediction
+### (4) Electrophysiological feature/celltype prediction
 #### patchseq_predict.py
-- This script loads the pre-trained PREPS `[models]` (default `patchseq`) to predict the electrophysiological features of the dataset `[test_name]` based on its cell embeddings loaded from the directory `./[test_name]_preds/`.
-- The predicted features are saved in the directory `./[test_name]_[models]/`.
+- This script loads the pre-trained PREPS `[models]` (`patchseq` or `celltype`, default `patchseq`) to predict the electrophysiological features or cell types of the dataset `[test_name]` based on its cell embeddings loaded from the directory `./[test_name]_preds/`.
+- The predicted features or cell types are saved in the directory `./[test_name]_[models]/`.
 
 #### Usage
 `$ python patchseq_predict.py [test_name] --models [models]`
@@ -88,12 +102,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 #### Examples
 `$ python patchseq_predict.py mouse -m patchseq`
   
-`$ python patchseq_predict.py glioma -m allen`
+`$ python patchseq_predict.py glioma -m celltype`
 
 #### Notes
-- The PREPS models with parameters grid-searched have been saved in the directories `./combined_patchseq_all_preds/` and `./allen_preds/`. ***Do not change*** the folder or file names that contain keys to identify the optimal model for each feature prediction.
-
-
-
-## Installation
-
+- The PREPS models with parameters grid-searched have been saved in the directory `./combined_patchseq_all_preds/`. ***Do not change*** the folder or file names that contain keys to identify the optimal model for each feature or cell type prediction.
