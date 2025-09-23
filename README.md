@@ -22,10 +22,11 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 - Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
   
 ## Application
-With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **(1) Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature/celltype prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
+With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **(1) R Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature/celltype prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
 
 ### Single-script whole workflow
 #### preps.py
+This script takes `adata.h5ad` from the directory `./[test_name]/` as input and generates annotations/predictions as output, with each separate step integrated into a whole workflow, including (2) Tokenization, (3) Annotation, and (4) Electrophysiological feature/celltype prediction.
 
 #### Usage
 `$ python preps.py [test_name] --species [species] --gpu_name [gpu_name] --models [models]`
@@ -36,9 +37,10 @@ With the GPT models fine-tuned and the predictive PREPS models trained, it is ea
 `$ python preps.py glioma -s human -g 1 -m celltype`
 
 #### Notes
+- `--species`: data source of `human` or `mouse`, default `human`. `--gpu_name`: on which GPU to run the code, `0`-`999`, default `0`. `--models`: predictive `patchseq` or `celltype` models to use, default `patchseq`.
 - The parameter options are the same settings as in the separate scripts, where more detailed instructions are provided.
   
-### Separate scripts: (1) Data conversion
+### Separate scripts: (1) R Data conversion
 If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the directory `./mouse/`. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
 ```
 library(Matrix)
