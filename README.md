@@ -37,7 +37,9 @@ This script takes `adata.h5ad` from the directory `./[test_name]/` as input and 
 `$ python preps.py glioma -s human -g 1 -m celltype`
 
 #### Notes
-- `--species`: data source of `human` or `mouse`, default `human`. `--gpu_name`: on which GPU to run the code, `0`-`999`, default `0`. `--models`: predictive `patchseq` or `celltype` models to use, default `patchseq`.
+- `--species`: data source of `human` or `mouse`, default `human`.
+- `--gpu_name`: on which GPU to run the code, `0`-`999`, default `0`.
+- `--models`: predictive `patchseq` or `celltype` models to use, default `patchseq`.
 - The parameter options are the same settings as in the separate scripts, where more detailed instructions are provided.
   
 ### Separate scripts: (1) R Data conversion
