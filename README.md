@@ -40,7 +40,7 @@ This script takes `adata.h5ad` from the directory `./[test_name]/` as input and 
 - `--species`: data source of `human` or `mouse`, default `human`.
 - `--gpu_name`: on which GPU to run the code, `0`-`999`, default `0`.
 - `--models`: predictive `patchseq` or `celltype` models to use, default `patchseq`.
-- The parameter options are the same settings as in the separate scripts, where more detailed instructions are provided.
+- The parameter settings are the same as in separate scripts. More details are provided below.
   
 ### Separate scripts: (1) R Data conversion
 If the scRNA-seq dataset `adata.h5ad` is available, skip this step and proceed to **(2) Tokenization**. Otherwise, suppose `[seuratObj].rda` is in the directory `./mouse/`. In `R`, we convert `seuratObj` into `meta.tsv`, `matrix.mtx`, `genes.tsv`, and `barcodes.tsv`, saving them in the same directory.
