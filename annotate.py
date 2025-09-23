@@ -1,14 +1,14 @@
 import argparse
 parser = argparse.ArgumentParser(description='Annotate one dataset using fine-tuned models. Output cell embeddings (_preds.csv) and cell-type scores (_scores.csv).')
-parser.add_argument('gpu_name', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
 parser.add_argument('test_name', help='Input the test dataset to be annotated (e.g., mouse, glioma).')
+parser.add_argument('-g', '--gpu_name', choices=list(map(str, range(1000))), default='0', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
 args = parser.parse_args()
-gpu_name = args.gpu_name
 test_name = args.test_name
+gpu_name = args.gpu_name
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = gpu_name
-os.environ["NCCL_DEBUG"] = "INFO"
+os.environ['CUDA_VISIBLE_DEVICES'] = gpu_name
+os.environ['NCCL_DEBUG'] = 'INFO'
 
 from datasets import load_from_disk
 from sklearn.metrics import accuracy_score, f1_score
@@ -24,9 +24,9 @@ import pandas as pd
 from tqdm import tqdm
 
 
-output_directory = f'{test_name}_preds/'
-os.mkdir(output_directory)
-shutil.copytree(f'{test_name}.dataset', output_directory + 'tokenized_copy.dataset')
+ann_output_directory = f'{test_name}_preds/'
+os.mkdir(ann_output_directory)
+shutil.copytree(f'{test_name}/{test_name}.dataset', ann_output_directory + 'tokenized_copy.dataset')
 
 ref_num_tups = [('aldinger_2000perCellType', 21), 
                 ('allen_2000perCellType', 20), 
@@ -45,7 +45,7 @@ for ref_name, num_classes in tqdm(ref_num_tups):
 
 
     # load data, labels, model
-    tokenized_dataset = load_from_disk(output_directory + 'tokenized_copy.dataset')
+    tokenized_dataset = load_from_disk(ann_output_directory + 'tokenized_copy.dataset')
     # tokenized_dataset = tokenized_dataset.filter(lambda x: x['isTumor'] == 1, num_proc=1)
     labels = [0] * tokenized_dataset.num_rows
     tokenized_dataset = tokenized_dataset.add_column('label', labels)
@@ -88,7 +88,7 @@ for ref_name, num_classes in tqdm(ref_num_tups):
         "disable_tqdm": False,
         "per_device_train_batch_size": geneformer_batch_size,
         "per_device_eval_batch_size": geneformer_batch_size,
-        "output_dir": output_directory
+        "output_dir": ann_output_directory
     }
     training_args_init = TrainingArguments(**training_args)
     trainer = Trainer(
@@ -102,7 +102,7 @@ for ref_name, num_classes in tqdm(ref_num_tups):
 
     df_preds = pd.DataFrame(predictions.predictions, index=tokenized_dataset['individual'])
     df_preds.index.name = 'individual'
-    df_preds.to_csv(output_directory + f'{output_prefix}_preds.csv', sep=',')
+    df_preds.to_csv(ann_output_directory + f'{output_prefix}_preds.csv', sep=',')
 
     y_predict_prob = softmax(predictions.predictions, axis=1)
     y_predict_int = np.argmax(y_predict_prob, axis=1)
@@ -118,4 +118,4 @@ for ref_name, num_classes in tqdm(ref_num_tups):
     df_predict_prob.columns = df_target_names.iloc[:, 0].tolist()
     df_predict_prob[col_ann] = y_predict_class
     df_predict_prob[col_score] = y_predict_score
-    df_predict_prob.to_csv(output_directory + f'{output_prefix}_scores.csv', sep=',')
+    df_predict_prob.to_csv(ann_output_directory + f'{output_prefix}_scores.csv', sep=',')

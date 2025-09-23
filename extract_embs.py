@@ -1,13 +1,25 @@
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['NCCL_DEBUG'] = 'INFO'
+
+import random
+import numpy as np
+import torch
+
+os.environ['PYTHONHASHSEED'] = '0'
+random.seed(0)
+np.random.seed(0)
+torch.manual_seed(0)
+
 import shutil
 from geneformer import EmbExtractor
 from tqdm import tqdm
 
 
-test_name = 'spatial_raw_data_input'
-output_directory = f'{test_name}_embs/'
-os.mkdir(output_directory)
-shutil.copytree(f'{test_name}.dataset', f'{output_directory}tokenized_copy.dataset')
+test_name = 'glioma2'
+emb_output_directory = f'{test_name}_gene_embs/'
+os.mkdir(emb_output_directory)
+shutil.copytree(f'{test_name}/{test_name}.dataset', emb_output_directory + 'tokenized_copy.dataset')
 
 ref_num_tups = [('aldinger_2000perCellType', 21), 
                 ('allen_2000perCellType', 20), 
@@ -27,24 +39,24 @@ for ref_name, num_classes in tqdm(ref_num_tups):
         # initiate EmbExtractor
         embex = EmbExtractor(model_type='CellClassifier',
                             num_classes=num_classes,
-                            emb_mode='cell', 
+                            emb_mode='gene', 
                             filter_data=None, 
-                            max_ncells=1000*1000,
+                            max_ncells=1*1000,
                             emb_layer=emb_layer,
-                            emb_label=['individual', 'group'],
-                            labels_to_plot=['group'],
-                            forward_batch_size=100,
+                            # emb_label=['individual', 'group'],
+                            # labels_to_plot=['group'],
+                            forward_batch_size=1,
                             nproc=1)
 
         # extracts embedding from input data
         embs = embex.extract_embs(model_directory=f'{ref_name}/finetune/240605_geneformer_CellClassifier_0_L2048_B12_LR5e-05_LSlinear_WU500_E10_Oadamw_F0/', 
-                                input_data_file=f'{output_directory}tokenized_copy.dataset',
-                                output_directory=output_directory,
+                                input_data_file=f'{emb_output_directory}tokenized_copy.dataset',
+                                output_directory=emb_output_directory,
                                 output_prefix=output_prefix)
 
-        # plot UMAP of cell embeddings
-        embex.plot_embs(embs=embs, 
-                        plot_style='umap',
-                        output_directory=output_directory,  
-                        output_prefix=output_prefix, 
-                        max_ncells_to_plot=1000*1000)
+        # # plot UMAP of cell embeddings
+        # embex.plot_embs(embs=embs, 
+        #                 plot_style='umap',
+        #                 output_directory=output_directory,  
+        #                 output_prefix=output_prefix, 
+        #                 max_ncells_to_plot=1000*1000)

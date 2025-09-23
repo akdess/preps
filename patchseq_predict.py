@@ -1,27 +1,25 @@
+import argparse
+parser = argparse.ArgumentParser(description='Electrophysiological feature prediction.')
+parser.add_argument('test_name', help='Input the name of the dataset to be predicted (e.g., mouse, glioma).')
+parser.add_argument('-m', '--models', choices=['patchseq', 'allen', 'celltype'], default='patchseq', help='Input -m patchseq or -m allen to designate models (default patchseq).')
+args = parser.parse_args()
+test_name = args.test_name
+models = args.models
+
 import os
 import random
 import numpy as np
 import pandas as pd
 from joblib import load
 from tqdm import tqdm
-import argparse
-
 
 os.environ['PYTHONHASHSEED'] = '0'
 random.seed(0)
 np.random.seed(0)
 
 
-parser = argparse.ArgumentParser(description='Electrophysiological feature prediction.')
-parser.add_argument('name', help='Input the name of the dataset to be predicted (e.g., mouse, glioma).')
-parser.add_argument('-m', '--models', choices=['patchseq', 'allen', 'celltype'], default='patchseq', help='Input -m patchseq or -m allen to designate models (default patchseq).')
-
-args = parser.parse_args()
-name = args.name
-models = args.models
-
-output_directory = f'{name}_{models}/'
-os.mkdir(output_directory)
+pred_output_directory = f'{test_name}_{models}/'
+os.mkdir(pred_output_directory)
 
 # ref_embs_directory = 'allen_preds/'
 # model_tups = [['v_baseline threshold_v_long_square trough_v_long_square_rel ElasticNet_emb_layer_preds/', 'prediction of v_baseline by embs alpha 0.25 l1_ratio 0.95 MAE 4.523.joblib'], 
@@ -64,7 +62,7 @@ elif models == 'patchseq':
 
 else:
     ref_embs_directory = 'combined_patchseq_all_preds/'
-    model_tups = [['CellTypeLogisticRegression_emb_layer_preds/', 'prediction of Cell Type by embs C 0.04 l1_ratio 0.05 acc 0.7058823529411765.joblib']]
+    model_tups = [['CellTypeLogisticRegression_emb_layer_scores/', 'prediction of Cell Type by embs C 3 l1_ratio 0.95 acc 0.7058823529411765.joblib']]
 
 for model_directory, model_name in tqdm(model_tups):
     assert len(model_name.split(' by ')) == 2
@@ -75,11 +73,11 @@ for model_directory, model_name in tqdm(model_tups):
 
     scaler = load(ref_embs_directory + model_directory + 'scaler.joblib')
     pca = load(ref_embs_directory + model_directory + 'pca.joblib')
-    model = load(ref_embs_directory + model_directory + model_name)
+    preps_model = load(ref_embs_directory + model_directory + model_name)
     if models == 'celltype':
         label_encoder = load(ref_embs_directory + model_directory + 'label_encoder.joblib')
 
-    embs_directory = f'{name}_preds/'
+    embs_directory = f'{test_name}_preds/'
     emb_layer = model_directory.split('_')[-1].replace('/', '')
     assert emb_layer in ['preds', 'scores']
     embs_files = [x for x in os.listdir(embs_directory) if x.endswith(f'{emb_layer}.csv')]
@@ -117,7 +115,7 @@ for model_directory, model_name in tqdm(model_tups):
     else:
         X_test = pca.transform(scaler.transform(df_merged.values))
 
-    y_predict = model.predict(X_test)
+    y_predict = preps_model.predict(X_test)
 
     if y_name.endswith('_log'):
         print('exp back')
@@ -126,7 +124,10 @@ for model_directory, model_name in tqdm(model_tups):
 
     if models == 'celltype':
         y_predict = label_encoder.inverse_transform(y_predict)
+        y_score = np.amax(preps_model.predict_proba(X_test), axis=1)
     
     df = pd.DataFrame({y_name: y_predict}, index=df_merged.index.tolist())
+    if models == 'celltype':
+        df['prob'] = y_score
     df.index.name = 'cells'
-    df.to_excel(output_directory + f'{y_name}.xlsx')
+    df.to_excel(pred_output_directory + f'{y_name}.xlsx')

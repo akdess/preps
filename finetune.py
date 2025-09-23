@@ -1,10 +1,10 @@
 import argparse
 parser = argparse.ArgumentParser(description='Fine-tune a pre-trained Geneformer model for a more specific context using a single tokenized dataset.')
-parser.add_argument('gpu_name', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
 parser.add_argument('ref_name', help='Input the reference dataset on which to fine-tune the model (e.g., aldinger_2000perCellType, bhaduri_3000perCellType).')
+parser.add_argument('-g', '--gpu_name', choices=list(map(str, range(1000))), default='0', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
 args = parser.parse_args()
-gpu_name = args.gpu_name
 ref_name = args.ref_name
+gpu_name = args.gpu_name
 
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = gpu_name
@@ -28,14 +28,13 @@ import pandas as pd
 
 
 # load training dataset 
-root_directory = f'{ref_name}/'
-output_directory = f'{root_directory}finetune/'
-os.mkdir(output_directory)
+finetune_output_directory = f'{ref_name}/finetune/'
+os.mkdir(finetune_output_directory)
 
 # It is important to always create and work with a copy, as many temporary files will be created and mess the dataset
 # When fine-tuning is done, the copy can be deleted while the original dataset keeps clean 
-shutil.copytree(f'{root_directory}{ref_name}.dataset', f'{output_directory}tokenized_copy.dataset')
-train_dataset = load_from_disk(f'{output_directory}tokenized_copy.dataset')
+shutil.copytree(f'{ref_name}/{ref_name}.dataset', finetune_output_directory + 'tokenized_copy.dataset')
+train_dataset = load_from_disk(finetune_output_directory + 'tokenized_copy.dataset')
 
 dataset_list = []
 evalset_list = []
@@ -89,7 +88,7 @@ for organ in Counter(train_dataset["isTumor"]).keys():
 
     # save label id: cell type
     df_target_names = pd.DataFrame({'target_names': target_names})
-    df_target_names.to_excel(f'{output_directory}target_names.xlsx', index=False, header=False)
+    df_target_names.to_excel(f'{finetune_output_directory}target_names.xlsx', index=False, header=False)
     
     # change labels to numerical ids
     def classes_to_ids(example):
@@ -175,7 +174,7 @@ for organ in organ_list:
     # define output directory path
     current_date = datetime.datetime.now()
     datestamp = f"{str(current_date.year)[-2:]}{current_date.month:02d}{current_date.day:02d}"
-    output_dir = f"{output_directory}{datestamp}_geneformer_CellClassifier_{organ}_L{max_input_size}_B{geneformer_batch_size}_LR{max_lr}_LS{lr_schedule_fn}_WU{warmup_steps}_E{epochs}_O{optimizer}_F{freeze_layers}/"
+    output_dir = f"{finetune_output_directory}{datestamp}_geneformer_CellClassifier_{organ}_L{max_input_size}_B{geneformer_batch_size}_LR{max_lr}_LS{lr_schedule_fn}_WU{warmup_steps}_E{epochs}_O{optimizer}_F{freeze_layers}/"
     
     # ensure not overwriting previously saved model
     saved_model_test = os.path.join(output_dir, f"pytorch_model.bin")
