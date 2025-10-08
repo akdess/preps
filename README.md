@@ -26,7 +26,7 @@ With the GPT models fine-tuned and the predictive PREPS models trained, it is ea
 
 ### Single-script whole workflow
 #### preps.py
-This script takes `adata.h5ad` from the directory `./[test_name]/` as input and generates annotations/predictions as output, with each separate step integrated into a whole workflow, including (2) Tokenization, (3) Annotation, and (4) Electrophysiological feature/celltype prediction.
+This script takes `adata.h5ad` from the directory `./[test_name]/` as input and generates predictions as output, with each separate step integrated into a whole workflow, including (2) Tokenization, (3) Annotation, and (4) Electrophysiological feature/celltype prediction. The tokenized data can be found in the directory `./[test_name]/[test_name].dataset/`. The GPT-based cell embeddings and reference cell type annotations are saved in the directory `./[test_name]_preds/`. The predicted electrophysiological features or cell types are saved in the directory `./[test_name]_[models]/`. 
 
 #### Usage
 `$ python preps.py [test_name] --species [species] --gpu_name [gpu_name] --models [models]`
@@ -80,7 +80,7 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 ### (3) Annotation
 #### annotate.py
-- This script loads the tokenized folder `[test_name].dataset` from the directory `./[test_name]/`, extracts cell embeddings, and annotates cell types using fine-tuned GPT models, saving the results in a new folder `./[test_name]_preds/`.
+- This script loads the tokenized data `[test_name].dataset` from the directory `./[test_name]/`, extracts cell embeddings, and annotates cell types using fine-tuned GPT models, saving the results in a new folder `./[test_name]_preds/`.
 - Loading `[test_name].dataset` generates many temporary files within the folder. This script creates and works with `./[test_name]_preds/tokenized_copy.dataset` to keep `[test_name].dataset` clean for future use, similar to `finetune.py`.
 
 #### Usage
