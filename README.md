@@ -126,3 +126,6 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 `$ python scoring.py DIPG mouse -s mouse -t brain -g 0`
   
 `$ python scoring.py glioma glioma -s human -t brain -g 1`
+
+#### Notes
+- The testing dataset `[test_name]` should have been tokenized before running `scoring.py`.
