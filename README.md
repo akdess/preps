@@ -4,7 +4,7 @@ The microenvironment of glioma is heterogeneous, including tumor cells, neurons,
 ## Methodology
 In the first step of PREPS, leveraging the foundational GPT model, Geneformer, which has captured the complexity within human gene networks based on a broad range of healthy tissues, we **fine-tuned** the model into a series of brain-specific cell type classifiers using the transcriptomes of various developing brain and glioma datasets. Besides clustering and annotating glioma cells, we extracted and concatenated **embeddings** from the intermediate layers of these classifiers to represent the comprehensive transcriptomic features of each cell. Next, we built a group of predictive Elastic Nets (i.e., PREPS models) that **map** the electrophysiological features of glioma cells to their embeddings, with models optimized through a systematic grid search of all parameter combinations. Finally, we applied PREPS models to **predict** electrophysiological features of a larger amount of glioma data, where conducting many Patch-seq experiments is time-consuming and labor-intensive.
   
-We also developed a single-cell gene set enrichment-like method to assign cell types using gene attention scores derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
+We also developed a single-cell gene set enrichment-like method (`scoring.py`) to assign cell types using gene **attention scores** derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
 
 ### Fine-tuning
 #### finetune.py
@@ -112,3 +112,17 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 
 #### Notes
 - The PREPS models with parameters grid-searched have been saved in the directory `./combined_patchseq_all_preds/`. ***Do not change*** the folder or file names that contain keys to identify the optimal model for each feature or cell type prediction.
+
+### Attention-based DEEPS celltype scoring
+#### scoring.py
+- This script serves as the attention-based cell type scoring framework that combines transformer-derived gene attention values with literature-curated marker gene sets.
+- It integrates multi-head attention patterns from fine-tuned Geneformer models and GPT-extracted marker weights from PubMed (queries of `[tumor]` OR `[tissue]`).
+- Each cell in the testing dataset `[test_name]` is assigned an enrichment-based score across candidate cell types.
+
+#### Usage
+`$ python scoring.py [tumor] [test_name] --species [species] --tissue [tissue] --gpu_name [gpu_name]`
+
+#### Examples
+`$ python scoring.py DIPG mouse -s mouse -t brain -g 0`
+  
+`$ python scoring.py glioma glioma -s human -t brain -g 1`
