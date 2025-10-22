@@ -571,11 +571,20 @@ mean_df = mean_df.set_index("cell_id").loc[adata.obs_names]
 assert all(mean_df.index == adata.obs_names)
 
 # Assign cell type based on threshold
+# Assign cell type with highest scoring > threshold
 threshold = 0.5
 def assign_cell_type(row):
     top_type = row[score_cols].idxmax()
     top_score = row[top_type]
     return top_type if top_score > threshold else "Unassigned"
+
+# Assign all cell types > threshold
+threshold = 0.3
+def assign_cell_type(row):
+    if row.max() < threshold:
+        return "Unassigned"
+    top_types = row[row >= threshold].sort_values(ascending=False).index.tolist()
+    return ";".join(top_types)
 
 mean_df["cell_type"] = mean_df.apply(assign_cell_type, axis=1)
 mean_df.to_csv(os.path.join(output_dir, "attention_weighted_ssgsea_scores_with_celltype.csv"), index=False)
