@@ -581,9 +581,10 @@ def assign_cell_type(row):
 # Assign all cell types > threshold
 threshold = 0.3
 def assign_cell_type(row):
-    if row.max() < threshold:
+    row_scores = row[score_cols]
+    if row_scores.max() < threshold:
         return "Unassigned"
-    top_types = row[row >= threshold].sort_values(ascending=False).index.tolist()
+    top_types = row_scores[row_scores >= threshold].sort_values(ascending=False).index.tolist()
     return ";".join(top_types)
 
 mean_df["cell_type"] = mean_df.apply(assign_cell_type, axis=1)
