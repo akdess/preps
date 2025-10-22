@@ -20,6 +20,11 @@ os.environ['NCCL_DEBUG'] = 'INFO'
 import random
 import numpy as np
 import pandas as pd
+import scanpy as sc
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
+from scipy.stats import spearmanr, pearsonr
 import torch
 import re
 import csv
@@ -530,3 +535,149 @@ majority_vote_df.to_csv(
     index=False
 )
 print("Saved majority vote assignments to attention_majority_voted_celltypes.csv")
+
+
+# ----------------------------
+# Feature plot
+scores_csv = os.path.join(output_dir, "attention_weighted_ssgsea_scores.csv")
+adata_path = "adata.h5ad"
+reduction_name = "X_umap_geneformer2"
+out_root = "FeaturePlots_by_rank"
+os.makedirs(out_root, exist_ok=True)
+
+# Load data
+scores = pd.read_csv(scores_csv)
+adata = sc.read_h5ad(adata_path)
+
+# Keep only cells present in AnnData
+scores = scores[scores["cell_id"].isin(adata.obs_names)]
+
+# Identify score columns
+exclude_cols = ["cell_id", "rank_file_id", "max_score", "voted_cell_type"]
+score_cols = [c for c in scores.columns if c not in exclude_cols]
+
+# Average across rank files
+mean_df = (
+    scores.groupby("cell_id")[score_cols]
+    .mean()
+    .reset_index()
+)
+
+# Replace NaN with None
+mean_df = mean_df.replace({np.nan: None})
+
+# Align order with AnnData
+mean_df = mean_df.set_index("cell_id").loc[adata.obs_names]
+assert all(mean_df.index == adata.obs_names)
+
+# Assign cell type based on threshold
+threshold = 0.5
+def assign_cell_type(row):
+    top_type = row[score_cols].idxmax()
+    top_score = row[top_type]
+    return top_type if top_score > threshold else "Unassigned"
+
+mean_df["cell_type"] = mean_df.apply(assign_cell_type, axis=1)
+mean_df.to_csv(os.path.join(output_dir, "attention_weighted_ssgsea_scores_with_celltype.csv"), index=False)
+
+# Add to metadata
+for col in score_cols:
+    adata.obs[f"avg__{col}"] = mean_df[col]
+
+# Plot each averaged feature
+for col in score_cols:
+    feature = f"avg__{col}"
+    if not adata.obs[feature].isna().all():
+        sc.pl.umap(
+            adata,
+            color=feature,
+            color_map="viridis",
+            show=False,
+            title=f"{col} (mean across ranks)",
+            save=f"_{col}_FeaturePlot_mean.png"
+        )
+
+
+# ----------------------------
+# DEEPS vs Seurat AddModuleScore
+deeps_path = os.path.join(output_dir, "attention_weighted_ssgsea_scores.csv")
+seurat_path = "seurat_metadata_with_module_scores.csv"
+umap_path = "umap_embeddings.csv"
+
+deeps_df = pd.read_csv(deeps_path)
+seurat_df = pd.read_csv(seurat_path)
+umap_df = pd.read_csv(umap_path)
+
+assert "cell_id" in deeps_df.columns and "cell_id" in seurat_df.columns
+merged = pd.merge(deeps_df, seurat_df, on="cell_id", suffixes=("_deeps", "_seurat"))
+merged = merged.merge(umap_df, on="cell_id", how="left")
+
+# Normalize scores
+deeps_cols = [c for c in merged.columns if c.endswith("_deeps")]
+seurat_cols = [c for c in merged.columns if c.endswith("_seurat")]
+
+scaler = MinMaxScaler()
+merged[deeps_cols] = scaler.fit_transform(merged[deeps_cols])
+merged[seurat_cols] = scaler.fit_transform(merged[seurat_cols])
+
+# Correlation
+results = []
+for cell_type in [c.replace("_deeps", "") for c in deeps_cols]:
+    d_col = f"{cell_type}_deeps"
+    s_col = f"{cell_type}_seurat"
+    if d_col in merged.columns and s_col in merged.columns:
+        valid = merged[[d_col, s_col]].dropna()
+        if len(valid) > 10:
+            pearson_r, _ = pearsonr(valid[d_col], valid[s_col])
+            spearman_r, _ = spearmanr(valid[d_col], valid[s_col])
+            results.append({
+                "CellType": cell_type,
+                "Pearson_r": pearson_r,
+                "Spearman_r": spearman_r,
+                "N_cells": len(valid)
+            })
+
+corr_df = pd.DataFrame(results)
+corr_df.to_csv("comparison_correlation_summary.csv", index=False)
+
+# Scatter plot
+sns.set(style="whitegrid")
+for cell_type in [c.replace("_deeps", "") for c in deeps_cols]:
+    d_col, s_col = f"{cell_type}_deeps", f"{cell_type}_seurat"
+    if d_col in merged.columns and s_col in merged.columns:
+        plt.figure(figsize=(5,5))
+        sns.scatterplot(data=merged, x=s_col, y=d_col, s=10, alpha=0.5)
+        sns.regplot(data=merged, x=s_col, y=d_col, scatter=False, color="red", ci=None)
+        plt.title(f"{cell_type}: DEEPS vs Seurat (Spearman = {corr_df.loc[corr_df.CellType==cell_type, 'Spearman_r'].values[0]:.2f})")
+        plt.xlabel("Seurat AddModuleScore")
+        plt.ylabel("DEEPS Attention Score")
+        plt.tight_layout()
+        plt.savefig(f"scatter_DEEPS_vs_Seurat_{cell_type}.png", dpi=300)
+        plt.close()
+
+# UMAP
+for cell_type in [c.replace("_deeps", "") for c in deeps_cols]:
+    for method, col_suffix in [("DEEPS", "_deeps"), ("Seurat", "_seurat")]:
+        score_col = f"{cell_type}{col_suffix}"
+        if score_col in merged.columns:
+            plt.figure(figsize=(5,5))
+            plt.scatter(
+                merged["UMAP_1"], merged["UMAP_2"],
+                c=merged[score_col], cmap="viridis", s=6
+            )
+            plt.title(f"{method} {cell_type} score")
+            plt.axis("off")
+            plt.tight_layout()
+            plt.savefig(f"UMAP_{method}_{cell_type}.png", dpi=300)
+            plt.close()
+
+# barplot of correlation
+plt.figure(figsize=(8, 4))
+sns.barplot(data=corr_df.melt(id_vars="CellType", value_vars=["Pearson_r","Spearman_r"]),
+            x="CellType", y="value", hue="variable")
+plt.xticks(rotation=45, ha="right")
+plt.ylabel("Correlation Coefficient")
+plt.title("DEEPS vs Seurat Correlation per Cell Type")
+plt.tight_layout()
+plt.savefig("DEEPS_vs_Seurat_CorrelationSummary.png", dpi=300)
+plt.close()
