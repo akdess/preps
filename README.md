@@ -7,7 +7,7 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 We also developed a single-cell gene set enrichment-like method (`scoring.py`) to assign cell types using gene **attention scores** derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
 
 ## Quickstart
-PREPS/
+PREPS/  
 ├── preps.sh                 <-- The master wrapper script
 ├── scripts/                 <-- All python logic here 
 │   ├── tokenize_data.py
