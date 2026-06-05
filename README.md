@@ -8,17 +8,17 @@ We also developed a single-cell gene set enrichment-like method (`scoring.py`) t
 
 ## Quickstart
 PREPS/  
-|---- preps.sh            
-|---- scripts/                    
-|-----|---- tokenize_data.py  
-|-----|---- finetune.py  
-|-----|---- annotate.py  
-|-----|---- patchseq_glm.py  
-|-----|---- select_best_models.py  
-|-----|---- patchseq_predict.py  
-|---- data/                      
-|---- requirements.txt  
-|---- README.md  
+|----- preps.sh            
+|----- scripts/                    
+|-----|----- tokenize_data.py  
+|-----|----- finetune.py  
+|-----|----- annotate.py  
+|-----|----- patchseq_glm.py  
+|-----|----- select_best_models.py  
+|-----|----- patchseq_predict.py  
+|----- data/                      
+|----- requirements.txt  
+|----- README.md  
 
 PREPS is fully automated through a single master script.  
 1. Finetune the foundation model:
