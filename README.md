@@ -1,19 +1,22 @@
 # PREPS 
 The microenvironment of glioma is heterogeneous, including tumor cells, neurons, and immune cells, making it difficult to develop an effective treatment. Our previous study also demonstrated neuronal behaviors of glioma tumor cells, especially firing an action potential, highlighting the importance of characterizing the electrophysiological properties of each single cell. The electrophysiology data is achieved through Patch-sequencing experiments. However, the available data size is limited due to the experimental difficulty. Here, we introduce **PREPS** (**Pr**edicting **E**lectrophysiological **P**roperties of **S**ingle-cell RNA-seq), a machine-learning-based ***computational framework*** that employs the state-of-the-art **GPT** (**G**enerative **P**re-trained **T**ransformer) models to predict electrophysiological features of glioma samples by single-cell RNA-sequencing. 
   
-## Quickstart
-PREPS is fully automated through a single master script.  
-1. Finetune the foundation model:
-   `./preps.sh finetune <dataset_name> <species>`
-2. Train prediction models (automatically selects lowest MAE / highest Acc):
-   `./preps.sh train <dataset_name> <species>`
-3. Apply PREPS to infer electrophysiology on a new atlas:
-   `./preps.sh apply <dataset_name> <species>`
-  
 ## Methodology
 In the first step of PREPS, leveraging the foundational GPT model, Geneformer, which has captured the complexity within human gene networks based on a broad range of healthy tissues, we **fine-tuned** the model into a series of brain-specific cell type classifiers using the transcriptomes of various developing brain and glioma datasets. Besides clustering and annotating glioma cells, we extracted and concatenated **embeddings** from the intermediate layers of these classifiers to represent the comprehensive transcriptomic features of each cell. Next, we built a group of predictive Elastic Nets (i.e., PREPS models) that **map** the electrophysiological features of glioma cells to their embeddings, with models optimized through a systematic grid search of all parameter combinations. Finally, we applied PREPS models to **predict** electrophysiological features of a larger amount of glioma data, where conducting many Patch-seq experiments is time-consuming and labor-intensive.
   
 We also developed a single-cell gene set enrichment-like method (`scoring.py`) to assign cell types using gene **attention scores** derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
+
+## Quickstart
+PREPS is fully automated through a single master script.  
+1. Finetune the foundation model:
+  
+   `./preps.sh finetune <dataset_name> <species>`
+2. Train prediction models (automatically selects lowest MAE / highest Acc):
+  
+   `./preps.sh train <dataset_name> <species>`
+3. Apply PREPS to infer electrophysiology on a new atlas:
+  
+   `./preps.sh apply <dataset_name> <species>`
 
 ### Fine-tuning
 #### finetune.py
