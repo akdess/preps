@@ -8,7 +8,7 @@ We also developed a single-cell gene set enrichment-like method (`scoring.py`) t
 
 ## Quickstart
 PREPS/  
-|----- preps.sh            
+|----- preps.sh <-- The master wrapper script           
 |----- scripts/                    
 |-----|----- tokenize_data.py  
 |-----|----- finetune.py  
