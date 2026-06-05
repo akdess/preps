@@ -10,7 +10,7 @@ We also developed a single-cell gene set enrichment-like method (`scoring.py`) t
 PREPS/  
 |--- preps.sh          <-- The master wrapper script  
 |--- scripts/                 <-- All python logic here   
-|      |--- tokenize_data.py  
+|        |--- tokenize_data.py  
 │       ├──── finetune.py  
 │       ├──── annotate.py  
 │       ├──── patchseq_glm.py  
