@@ -7,6 +7,19 @@ In the first step of PREPS, leveraging the foundational GPT model, Geneformer, w
 We also developed a single-cell gene set enrichment-like method (`scoring.py`) to assign cell types using gene **attention scores** derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
 
 ## Quickstart
+PREPS/
+├── preps.sh                 <-- The master wrapper script
+├── scripts/                 <-- All python logic here 
+│   ├── tokenize_data.py
+│   ├── finetune.py
+│   ├── annotate.py
+│   ├── patchseq_glm.py
+│   ├── select_best_models.py
+│   └── patchseq_predict.py
+├── data/                    <-- Empty folder for user inputs
+├── requirements.txt
+└── README.md
+
 PREPS is fully automated through a single master script.  
 1. Finetune the foundation model:
   
@@ -17,7 +30,8 @@ PREPS is fully automated through a single master script.
 3. Apply PREPS to infer electrophysiology on a new atlas:
   
    `./preps.sh apply <dataset_name> <species>`
-
+  
+## Application
 ### Fine-tuning
 #### finetune.py
 - This script fine-tunes the fundamental GPT model loaded from the directory `./Geneformer/` for a more specific context using a single reference dataset `./[ref_name]/[ref_name].dataset`.
@@ -34,8 +48,7 @@ PREPS is fully automated through a single master script.
 #### Notes
 - The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[ref_name]/[ref_name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
 - Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
-  
-## Application
+
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **(1) R Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature/celltype prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.
 
 ### Single-script whole workflow
