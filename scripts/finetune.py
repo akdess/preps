@@ -2,9 +2,11 @@ import argparse
 parser = argparse.ArgumentParser(description='Fine-tune a pre-trained Geneformer model for a more specific context using a single tokenized dataset.')
 parser.add_argument('ref_name', help='Input the reference dataset on which to fine-tune the model (e.g., aldinger_2000perCellType, bhaduri_3000perCellType).')
 parser.add_argument('-g', '--gpu_name', choices=list(map(str, range(1000))), default='0', help='Input the idle GPU on which to run the code (e.g., 0, 1, 2).')
+parser.add_argument('-s', '--species', choices=['human', 'mouse'], default='human', help='Input -s human or -s mouse to designate species (default human).')
 args = parser.parse_args()
 ref_name = args.ref_name
 gpu_name = args.gpu_name
+species = args.species
 
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = gpu_name
@@ -164,18 +166,21 @@ for organ in organ_list:
     # set logging steps
     logging_steps = round(len(organ_trainset)/geneformer_batch_size/10)
     
+    if species == 'human':
+        base_model_path = "Geneformer/"
+    else:
+        base_model_path = "Mouse_Geneformer/"
+
     # reload pretrained model
-    model = BertForSequenceClassification.from_pretrained("Geneformer/", 
+    model = BertForSequenceClassification.from_pretrained(base_model_path, 
                                                       num_labels=len(organ_label_dict.keys()), 
                                                       ignore_mismatched_sizes=True, 
                                                       output_attentions = False,
                                                       output_hidden_states = False).to("cuda")
     
     # define output directory path
-    current_date = datetime.datetime.now()
-    datestamp = f"{str(current_date.year)[-2:]}{current_date.month:02d}{current_date.day:02d}"
-    output_dir = f"{finetune_output_directory}{datestamp}_geneformer_CellClassifier_{organ}_L{max_input_size}_B{geneformer_batch_size}_LR{max_lr}_LS{lr_schedule_fn}_WU{warmup_steps}_E{epochs}_O{optimizer}_F{freeze_layers}/"
-    
+    output_dir = f"{finetune_output_directory}trained_model/"
+
     # ensure not overwriting previously saved model
     saved_model_test = os.path.join(output_dir, f"pytorch_model.bin")
     if os.path.isfile(saved_model_test) == True:
