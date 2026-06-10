@@ -1,7 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(description='scRNA-seq data tokenization.')
 parser.add_argument('test_name', help='Input the directory name of the dataset to be tokenized (e.g., mouse, glioma).')
-parser.add_argument('-s', '--species', choices=['human', 'mouse'], default='mouse', help='Input -s human or -s mouse to designate species (default human).')
+parser.add_argument('-s', '--species', choices=['human', 'mouse'], default='human', help='Input -s human or -s mouse to designate species (default human).')
 args = parser.parse_args()
 test_name = args.test_name
 species = args.species
@@ -48,9 +48,17 @@ adata = sc.read_h5ad(file_path)
 #     adata.write(output_directory + 'adata.h5ad')
 #     print(f'{output_directory}adata.h5ad saved')
 
-adata.obs['group'] = '_' # If adata is for GPT model finetuning, designate one column of adata.obs as "group" that contains group information
-adata.obs['isTumor'] = 0 # A trick related to finetuning: only those cells labeled with "isTumor = 0" are to be used for model finetuning
-adata.obs = adata.obs[['group', 'isTumor']].copy() # All other columns of adata.obs are excluded as they may disturb tokenization
+
+# Preserve 'group' if it exists (critical for finetuning), otherwise set a placeholder
+if 'group' not in adata.obs.columns:
+    adata.obs['group'] = '_' 
+
+# Preserve 'isTumor' if it exists, otherwise set to 0 (so cells are used by default)
+if 'isTumor' not in adata.obs.columns:
+    adata.obs['isTumor'] = 0 
+
+# All other columns of adata.obs are excluded as they may disturb tokenization
+adata.obs = adata.obs[['group', 'isTumor']].copy()
 
 gp = GProfiler(return_dataframe=True)
 if species == 'human':
