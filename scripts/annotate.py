@@ -24,6 +24,7 @@ import pandas as pd
 import torch
 import pickle
 from tqdm import tqdm
+import glob
 
 
 ann_output_directory = f'{test_name}_preds/'
@@ -48,20 +49,43 @@ tokenized_dataset = tokenized_dataset.add_column('label', labels)
 with open("token_dictionary_gc30M.pkl", "rb") as f:
     tok_dict = pickle.load(f)
 
-ref_num_tups = [('aldinger_2000perCellType', 21), 
-                ('allen_2000perCellType', 20), 
-                ('bhaduri_3000perCellType', 10), 
-                ('bhaduri_d2_4000perCellType', 10), 
-                ('codex_1000perCellType', 16), 
-                ('devbrain_3000perCellType', 10), 
-                ('dirks_primary_gbm_combined_2000perCellType', 13), 
-                ('primary_gbm_2000perCellType', 8), 
-                ('recurrent_gbm_1000perCellType', 14), 
-                ('TissueImmune_2000perCellType', 45)]
+# ref_num_tups = [('aldinger_2000perCellType', 21), 
+#                 ('allen_2000perCellType', 20), 
+#                 ('bhaduri_3000perCellType', 10), 
+#                 ('bhaduri_d2_4000perCellType', 10), 
+#                 ('codex_1000perCellType', 16), 
+#                 ('devbrain_3000perCellType', 10), 
+#                 ('dirks_primary_gbm_combined_2000perCellType', 13), 
+#                 ('primary_gbm_2000perCellType', 8), 
+#                 ('recurrent_gbm_1000perCellType', 14), 
+#                 ('TissueImmune_2000perCellType', 45)]
+
+# Dynamically discover all fine-tuned models in the working directory
+trained_model_paths = glob.glob('*/finetune/trained_model/')
+
+if not trained_model_paths:
+    raise FileNotFoundError("No fine-tuned models found. Please run finetune.py first.")
+
+ref_num_tups = []
+for path in trained_model_paths:
+    # Extract the ref_name from the path (e.g., 'aldinger/finetune/trained_model/' -> 'aldinger')
+    ref_name = path.split(os.sep)[0] 
+    
+    # Read the target names to determine num_classes dynamically
+    target_names_path = f'{ref_name}/finetune/target_names.xlsx'
+    if os.path.exists(target_names_path):
+        df_target_names = pd.read_excel(target_names_path, header=None)
+        num_classes = len(df_target_names)
+        ref_num_tups.append((ref_name, num_classes))
+    else:
+        print(f"⚠️ Warning: {target_names_path} not found. Skipping {ref_name}.")
+
+print(f"🔍 Found {len(ref_num_tups)} fine-tuned models to use for annotation.")
 
 for ref_name, num_classes in tqdm(ref_num_tups):
     output_prefix = f'preds_by_{ref_name}_num_classes_{num_classes}'
-    model_directory=f'{ref_name}/finetune/240605_geneformer_CellClassifier_0_L2048_B12_LR5e-05_LSlinear_WU500_E10_Oadamw_F0/'
+    # model_directory=f'{ref_name}/finetune/240605_geneformer_CellClassifier_0_L2048_B12_LR5e-05_LSlinear_WU500_E10_Oadamw_F0/'
+    model_directory = f'{ref_name}/finetune/trained_model/'
     df_target_names = pd.read_excel(f'{ref_name}/finetune/target_names.xlsx', header=None)
 
     model = BertForSequenceClassification.from_pretrained(model_directory, 
