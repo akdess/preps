@@ -17,6 +17,11 @@ PREPS/
 | ----- | ----- select_best_models.py  
 | ----- | ----- patchseq_predict.py  
 | ----- data/                      
+| ----- paper_reproducibility/  
+| ----- | ----- mouse_model_pipeline/  
+| ----- | ----- | ----- models/  
+| ----- | ----- | ----- scripts/  
+| ----- | ----- | ----- README.md  
 | ----- requirements.txt  
 | ----- README.md  
   
