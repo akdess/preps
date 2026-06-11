@@ -19,13 +19,17 @@ echo "========================================"
 
 if [ "$WORKFLOW" == "finetune" ]; then
     python tokenize_data.py "$DATASET" -s "$SPECIES"
-    python finetune.py "$DATASET"
+    python finetune.py "$DATASET" -s "$SPECIES"
 
 elif [ "$WORKFLOW" == "train" ]; then
     python tokenize_data.py "$DATASET" -s "$SPECIES"
     python annotate.py "$DATASET"
-    python patchseq_glm.py
-    python select_best_models.py
+    
+    # Train regressor and classifier models using the dynamic dataset name
+    python patchseq_glm.py "$DATASET"
+    
+    # Automatically scan the output directory and select the best models
+    python select_best_models.py "${DATASET}_preds/"
 
 elif [ "$WORKFLOW" == "apply" ]; then
     python tokenize_data.py "$DATASET" -s "$SPECIES"
