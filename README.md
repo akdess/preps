@@ -20,18 +20,51 @@ PREPS/
 | ----- requirements.txt  
 | ----- README.md  
 
-PREPS is fully automated through a single master script.  
-1. Finetune the foundation model:
+PREPS is fully automated through a single master Bash script (`preps.sh`). All data tokenization, model training, annotation, and prediction steps are handled automatically based on the workflow you select.  
+
+### Command Structure  
+`./preps.sh [workflow] [dataset_name] [species]`  
+- **workflow:** Choose between `finetune`, `train`, or `apply`.
+- **dataset_name:** The prefix of your dataset (e.g., if your file is `glioma.h5ad`, use `glioma`).
+- **species:** `human` or `mouse` (defaults to `human` if left blank).
   
-   `./preps.sh finetune <dataset_name> <species>`
-2. Train prediction models (automatically selects lowest MAE / highest Acc):
+### Prerequisites
+Before running for the first time, make sure the master script is executable:  
+`chmod +x preps.sh`  
+Ensure your input dataset is in `.h5ad` format and placed in the main directory (e.g., `my_dataset.h5ad`).  
+
+### Example 1: Fine-tuning the Foundation Model  
+Use the `finetune` workflow to adapt the Geneformer foundation model to your specific biological context.  
+#### Example Command:  
+`./preps.sh finetune allen_cortex mouse`  
+**What it does:** Tokenizes `allen_cortex.h5ad` using Mouse-Geneformer, fine-tunes the transformer for cell-type classification, and saves the output to a predictable `trained_model/` directory.  
+
+### Example 2: Training Predictive Models (Patch-seq)  
+Use the `train` workflow on your paired Patch-seq dataset to build the electrophysiological and cell-type prediction models. Make sure you have your metadata (`_meta_data.txt`) and ephys features (`_ephys_features.csv`) in the directory.  
+#### Example Command:  
+`./preps.sh train m1_patchseq mouse`  
+**What it does:** Tokenizes the Patch-seq data, extracts latent embeddings using the fine-tuned model, trains Elastic Net regressors and Logistic Regression classifiers, and automatically scans and saves the lowest MAE / highest Accuracy models as `best__*.joblib`.  
+
+### Example 3: Atlas-Scale Application (Inference)  
+Use the `apply` workflow to project your trained electrophysiological models onto a massive, unimodal scRNA-seq atlas.  
+#### Example Command:  
+`./preps.sh apply glioma_patients human`  
+**What it does:** Tokenizes the unimodal `glioma_patients.h5ad` data, extracts embeddings using the human foundation model, dynamically loads your `best__` predictive models, and outputs clean Excel files with the predicted continuous electrophysiological features and cell-type probabilities for every single cell.  
+
+### Workflow Tip: The Complete End-to-End Pipeline  
+If you are starting from scratch with a new species or brain region, a complete end-to-end pipeline simply looks like this:  
+```
+# 1. Fine-tune on a large reference atlas  
+./preps.sh finetune brain_reference human  
   
-   `./preps.sh train <dataset_name> <species>`
-3. Apply PREPS to infer electrophysiology on a new atlas:
+# 2. Train predictive models on a paired Patch-seq dataset  
+./preps.sh train glioma_patchseq human  
   
-   `./preps.sh apply <dataset_name> <species>`
+# 3. Predict electrophysiology on a massive new unimodal dataset  
+./preps.sh apply glioma_unimodal human  
+```
   
-## Application
+## Step-wise Application
 ### Fine-tuning
 #### finetune.py
 - This script fine-tunes the fundamental GPT model loaded from the directory `./Geneformer/` for a more specific context using a single reference dataset `./[ref_name]/[ref_name].dataset`.
