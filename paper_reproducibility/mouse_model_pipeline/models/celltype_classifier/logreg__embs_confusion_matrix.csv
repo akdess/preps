@@ -1,0 +1,9 @@
+,CT_pred,ET_pred,IT_pred,Lamp5_pred,Pvalb_pred,Sncg_pred,Sst_pred,Vip_pred
+CT_true,82,0,20,1,0,0,3,0
+ET_true,1,40,6,0,1,0,1,0
+IT_true,15,2,236,0,1,0,0,0
+Lamp5_true,0,0,0,77,3,3,2,6
+Pvalb_true,0,0,1,3,264,0,16,5
+Sncg_true,0,0,0,2,0,4,0,7
+Sst_true,0,1,1,3,18,2,241,6
+Vip_true,0,0,1,5,3,1,8,135
