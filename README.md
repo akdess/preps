@@ -40,7 +40,7 @@ Ensure your input dataset is in `.h5ad` format and placed in the main directory 
 ### Example 1: Fine-tuning the Foundation Model  
 Use the `finetune` workflow to adapt the Geneformer foundation model to your specific biological context.  
   
-#### Example Command:  
+Example Command:  
 `./preps.sh finetune allen_cortex mouse`  
   
 **What it does:** Tokenizes `allen_cortex.h5ad` using Mouse-Geneformer, fine-tunes the transformer for cell-type classification, and saves the output to a predictable `trained_model/` directory.  
@@ -48,7 +48,7 @@ Use the `finetune` workflow to adapt the Geneformer foundation model to your spe
 ### Example 2: Training Predictive Models (Patch-seq)  
 Use the `train` workflow on your paired Patch-seq dataset to build the electrophysiological and cell-type prediction models. Make sure you have your metadata (`_meta_data.txt`) and ephys features (`_ephys_features.csv`) in the directory.  
   
-#### Example Command:  
+Example Command:  
 `./preps.sh train m1_patchseq mouse`  
   
 **What it does:** Tokenizes the Patch-seq data, extracts latent embeddings using the fine-tuned model, trains Elastic Net regressors and Logistic Regression classifiers, and automatically scans and saves the lowest MAE / highest Accuracy models as `best__*.joblib`.  
@@ -56,7 +56,7 @@ Use the `train` workflow on your paired Patch-seq dataset to build the electroph
 ### Example 3: Atlas-Scale Application (Inference)  
 Use the `apply` workflow to project your trained electrophysiological models onto a massive, unimodal scRNA-seq atlas.  
   
-#### Example Command:  
+Example Command:  
 `./preps.sh apply glioma_patients human`  
   
 **What it does:** Tokenizes the unimodal `glioma_patients.h5ad` data, extracts embeddings using the human foundation model, dynamically loads your `best__` predictive models, and outputs clean Excel files with the predicted continuous electrophysiological features and cell-type probabilities for every single cell.  
