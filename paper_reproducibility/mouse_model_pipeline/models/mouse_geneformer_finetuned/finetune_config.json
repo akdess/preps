@@ -1,0 +1,16 @@
+{
+  "prepared_dir": "/mnt/data/serinharmanci/preps_revision_052726/data/mouse_geneformer_finetune/wmb_isocortex_subclass_2000perCellType",
+  "base_model_dir": "/mnt/data/serinharmanci/preps_revision_052726/MOUSE_GENEFORMER/mouse-Geneformer",
+  "n_classes": 24,
+  "epochs": 10,
+  "batch_size": 12,
+  "grad_accum": 1,
+  "lr": 5e-05,
+  "weight_decay": 0.001,
+  "warmup_steps": 500,
+  "max_input_size": 2048,
+  "seed": 0,
+  "fp16": true,
+  "bf16": false,
+  "freeze_encoder": false
+}

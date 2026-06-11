@@ -1,0 +1,25 @@
+label_id,target_name
+0,001 CLA-EPd-CTX Car3 Glut
+1,002 IT EP-CLA Glut
+2,003 L5/6 IT TPE-ENT Glut
+3,004 L6 IT CTX Glut
+4,005 L5 IT CTX Glut
+5,006 L4/5 IT CTX Glut
+6,007 L2/3 IT CTX Glut
+7,009 L2/3 IT PIR-ENTl Glut
+8,010 IT AON-TT-DP Glut
+9,020 L2/3 IT RSP Glut
+10,021 L4 RSP-ACA Glut
+11,022 L5 ET CTX Glut
+12,027 L6b EPd Glut
+13,028 L6b/CT ENT Glut
+14,029 L6b CTX Glut
+15,030 L6 CT CTX Glut
+16,032 L5 NP CTX Glut
+17,046 Vip Gaba
+18,047 Sncg Gaba
+19,049 Lamp5 Gaba
+20,050 Lamp5 Lhx6 Gaba
+21,051 Pvalb chandelier Gaba
+22,052 Pvalb Gaba
+23,053 Sst Gaba
