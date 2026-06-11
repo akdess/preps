@@ -131,17 +131,21 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - In `matrix.mtx`, ***raw read counts*** should be saved instead of processed or scaled data.
 
 ### Tokenization
-#### tokenize.py
+#### tokenize_data.py
 - This script loads the scRNA-seq data `adata.h5ad` or the equivalent set {`meta.tsv`, `matrix.mtx`, `genes.tsv`, `barcodes.tsv`} from the directory `./[test_name]/`, converts them into an intermediate `[test_name].loom`, and tokenizes `[test_name].loom`, saving the results in a new folder `./[test_name]/[test_name].dataset/`.
 - Human (the default `[species]`) or mouse gene symbols will be mapped to human Ensembl IDs through the `GProfiler` online search.
   
 #### Usage
-`$ python tokenize.py [test_name] --species [species]`
+```
+python tokenize_data.py [test_name] --species [species]
+```
   
 #### Examples
-`$ python tokenize.py mouse -s mouse`
-  
-`$ python tokenize.py glioma -s human`
+```
+python tokenize_data.py mouse -s mouse  
+
+python tokenize_data.py glioma -s human  
+```
   
 #### Notes
 - `adata.h5ad` or `matrix.mtx` should contain ***raw read counts***.
@@ -153,18 +157,22 @@ write.table(colnames(seuratObj), file = "mouse/barcodes.tsv",
 - The fine-tuned model will be saved in the folder `./[ref_name]/finetune`.
 
 #### Usage
-`$ python finetune.py [ref_name] --gpu_name [gpu_name]`
-
-#### Examples
-`$ python finetune.py aldinger_2000perCellType`
+```
+python finetune.py [ref_name] --gpu_name [gpu_name]
+```
   
-`$ python finetune.py bhaduri_3000perCellType -g 2`
+#### Examples
+```
+python finetune.py aldinger_2000perCellType  
+
+python finetune.py bhaduri_3000perCellType -g 2  
+```
 
 #### Notes
-- The reference dataset should have been ***tokenized*** using `tokenize.py` and saved as `./[ref_name]/[ref_name].dataset`. See **Application - (2) Tokenization** for how `tokenize.py` works.
+- The reference dataset should have been ***tokenized*** using `tokenize_data.py` and saved as `./[ref_name]/[ref_name].dataset`.   
 - Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
 
-With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **(1) R Data conversion**, **(2) Tokenization**, **(3) Annotation**, and **(4) Electrophysiological feature/celltype prediction**. Below, we demonstrate how PREPS works with a mouse scRNA-seq dataset.  
+With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **Tokenization**, **Annotation**, and **Electrophysiological feature/celltype prediction**.   
   
 ### Annotation
 #### annotate.py
@@ -172,12 +180,16 @@ With the GPT models fine-tuned and the predictive PREPS models trained, it is ea
 - Loading `[test_name].dataset` generates many temporary files within the folder. This script creates and works with `./[test_name]_preds/tokenized_copy.dataset` to keep `[test_name].dataset` clean for future use, similar to `finetune.py`.
 
 #### Usage
-`$ python annotate.py [test_name] --gpu_name [gpu_name]`
+```
+python annotate.py [test_name] --gpu_name [gpu_name]
+```
 
 #### Examples
-`$ python annotate.py mouse`
-  
-`$ python annotate.py glioma -g 1`
+```
+python annotate.py mouse  
+
+python annotate.py glioma -g 1  
+```
 
 #### Notes
 - Each fine-tuned GPT model's folder should have been saved in the ***current*** directory (e.g., `./aldinger_2000perCellType`, `./bhaduri_3000perCellType`).
@@ -189,12 +201,16 @@ With the GPT models fine-tuned and the predictive PREPS models trained, it is ea
 - The predicted features or cell types are saved in the directory `./[test_name]_[models]/`.
 
 #### Usage
-`$ python patchseq_predict.py [test_name] --models [models]`
+```
+python patchseq_predict.py [test_name] --models [models]
+```
 
 #### Examples
-`$ python patchseq_predict.py mouse -m patchseq`
-  
-`$ python patchseq_predict.py glioma -m celltype`
+```
+python patchseq_predict.py mouse -m patchseq  
+
+python patchseq_predict.py glioma -m celltype  
+```
 
 #### Notes
 - The PREPS models with parameters grid-searched have been saved in the directory `./combined_patchseq_all_preds/`. ***Do not change*** the folder or file names that contain keys to identify the optimal model for each feature or cell type prediction.
@@ -206,12 +222,16 @@ With the GPT models fine-tuned and the predictive PREPS models trained, it is ea
 - Each cell in the testing dataset `[test_name]` is assigned an enrichment-based score across candidate cell types.
 
 #### Usage
-`$ python scoring.py [tumor] [test_name] --species [species] --tissue [tissue] --gpu_name [gpu_name]`
-
-#### Examples
-`$ python scoring.py DIPG mouse -s mouse -t brain -g 0`
+```
+python scoring.py [tumor] [test_name] --species [species] --tissue [tissue] --gpu_name [gpu_name]
+```
   
-`$ python scoring.py glioma glioma -s human -t brain -g 1`
+#### Examples
+```
+python scoring.py DIPG mouse -s mouse -t brain -g 0  
+
+python scoring.py glioma glioma -s human -t brain -g 1  
+```
 
 #### Notes
 - The testing dataset `[test_name]` should have been tokenized before running `scoring.py`.
