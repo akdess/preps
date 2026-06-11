@@ -21,7 +21,9 @@ PREPS/
 | ----- | ----- mouse_model_pipeline/  
 | ----- | ----- | ----- models/  
 | ----- | ----- | ----- scripts/  
-| ----- | ----- | ----- README.md  
+| ----- | ----- human_model_pipeline/  
+| ----- | ----- | ----- models/  
+| ----- | ----- | ----- scripts/    
 | ----- requirements.txt  
 | ----- README.md  
   
