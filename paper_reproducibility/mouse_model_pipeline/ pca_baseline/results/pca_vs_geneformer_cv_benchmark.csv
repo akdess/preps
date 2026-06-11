@@ -1,0 +1,7 @@
+classifier,mean_acc_%,std_acc_%,mean_f1_%
+LR + PCA-50,98.6,0.9,98.6
+LR + PCA-100,98.1,1.2,98.1
+RF + PCA-50,96.6,1.3,96.5
+ET + PCA-50,97.3,1.1,97.2
+LR (no PCA),98.8,0.8,98.8
+Geneformer (PREPS) [ref],86.1,,85.0

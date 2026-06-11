@@ -1,0 +1,5 @@
+method,probability_cutoff,n_cells,n_correct,concordance_pct
+pca,0.0,303533,291738,96.11
+pca,0.5,302684,291277,96.23
+pca,0.9,268438,266072,99.12
+pca,0.95,257649,256353,99.5
