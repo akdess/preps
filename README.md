@@ -5,7 +5,34 @@ The microenvironment of glioma is heterogeneous, including tumor cells, neurons,
 In the first step of PREPS, leveraging the foundational GPT model, Geneformer, which has captured the complexity within human gene networks based on a broad range of healthy tissues, we **fine-tuned** the model into a series of brain-specific cell type classifiers using the transcriptomes of various developing brain and glioma datasets. Besides clustering and annotating glioma cells, we extracted and concatenated **embeddings** from the intermediate layers of these classifiers to represent the comprehensive transcriptomic features of each cell. Next, we built a group of predictive Elastic Nets (i.e., PREPS models) that **map** the electrophysiological features of glioma cells to their embeddings, with models optimized through a systematic grid search of all parameter combinations. Finally, we applied PREPS models to **predict** electrophysiological features of a larger amount of glioma data, where conducting many Patch-seq experiments is time-consuming and labor-intensive.
   
 We also developed a single-cell gene set enrichment-like method (`scoring.py`) to assign cell types using gene **attention scores** derived from our fine-tuned transformer models. For each cell, we averaged multi-head attention weights from the final transformer layer and ranked genes based on the [CLS] token’s attention vector. Gene identifiers were converted to symbols, producing ranked gene lists per cell. To define marker sets, we automatically extracted and weighted marker genes for each cell type using PubMed abstracts (2021-2024) and GPT-4.1, prioritizing genes frequently cited or included in canonical brain cell markers. Using these weighted marker lists, we calculated enrichment scores per cell via a modified ssGSEA approach, assigning each cell to the highest scoring type. Final cell type labels were determined by consensus across multiple ranked gene inputs, and both enrichment scores and final annotations were exported.
-
+  
+## Installation & Setup  
+To ensure all dependencies run correctly, it is highly recommended to install this project within a Python virtual environment.  
+  
+**1. Clone the repository**  
+```
+git clone https://github.com/akdess/preps.git  
+cd preps  
+```
+  
+**2. Create and activate a virtual environment**  
+- For macOS and Linux:  
+  ```
+  python3 -m venv venv  
+  source venv/bin/activate  
+  ```
+- For Windows:  
+  ```
+  python -m venv venv  
+  venv\Scripts\activate  
+  ```
+  
+**3. Install the required dependencies**  
+Make sure your virtual environment is active, then run:  
+```
+pip install -r requirements.txt  
+```
+  
 ## Quickstart
 PREPS/  
 | ----- preps.sh <-- The master wrapper script           
