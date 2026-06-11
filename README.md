@@ -170,7 +170,7 @@ python finetune.py bhaduri_3000perCellType -g 2
 
 #### Notes
 - The reference dataset should have been ***tokenized*** using `tokenize_data.py` and saved as `./[ref_name]/[ref_name].dataset`.   
-- Run `$ nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
+- Run `nvidia-smi` to select an idle `[gpu_name]` with low Memory-Usage and GPU-Utility, default `0`.
 
 With the GPT models fine-tuned and the predictive PREPS models trained, it is easy to predict the electrophysiological features of a new scRNA-seq dataset (either human or mouse). Users can choose to run either the single script with the whole workflow integrated or separate scripts for flexible adjustment. Starting from an input `[seuratObj].rda` or `adata.h5ad`, the workflow consists of **Tokenization**, **Annotation**, and **Electrophysiological feature/celltype prediction**.   
   
