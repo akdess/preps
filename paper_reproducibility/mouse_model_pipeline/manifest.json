@@ -1,0 +1,1131 @@
+{
+  "name": "mouse_model_pipeline",
+  "description": "Self-contained mouse cell-type + ephys prediction pipeline (previous-models / 304-dim). Includes the fine-tuned Mouse-Geneformer model (24 WMB Isocortex subclasses) that generated the bridge embeddings.",
+  "embedding_dim": 304,
+  "finetuned_model": "models/mouse_geneformer_finetuned (24-class WMB Isocortex subclass fine-tune; eval acc 0.963)",
+  "generated_at": "2026-06-10T13:55:09-0500",
+  "n_files": 224,
+  "total_bytes": 2016308479,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 4494,
+      "sha256": "c7b4583484fae186949223e99a4b686578f0b4826024651ed9abe0e569d72288"
+    },
+    {
+      "path": "embeddings/gse185862_ssv4_embeddings.npz",
+      "size_bytes": 91304885,
+      "sha256": "2c8ca2675721ef5f527185399401053ddd337c59d6989f2580777d602806e1ba"
+    },
+    {
+      "path": "embeddings/m1_patchseq_embeddings.npz",
+      "size_bytes": 1670111,
+      "sha256": "089a77e147c31e4054f4b18c1799956a240211a3994c0d424d0be064ef2e9100"
+    },
+    {
+      "path": "embeddings/wmb_isocortex_1_embeddings.npz",
+      "size_bytes": 285376086,
+      "sha256": "17b3b48f7d40d206dbe1d82ba09ca1087d65ce72b93e3267fa82940ce166de33"
+    },
+    {
+      "path": "embeddings/wmb_isocortex_2_embeddings.npz",
+      "size_bytes": 285346776,
+      "sha256": "38a88fb6a38c9d696ea9bb1b4fd99e4df184db9a1c8a372866c2b0b28bb67d2f"
+    },
+    {
+      "path": "figures/Figure5_WMB_concordance_ephys.pdf",
+      "size_bytes": 27920,
+      "sha256": "acd99044f5282724fc681f9b606e921defe145751988228b85708a94618aa539"
+    },
+    {
+      "path": "figures/Figure5_WMB_concordance_ephys.png",
+      "size_bytes": 1607615,
+      "sha256": "8bb946df11043fb679f6abafd8960ff6da5df71c493830713b7638be56a577ba"
+    },
+    {
+      "path": "figures/Figure_GSE185862_concordance_ephys.pdf",
+      "size_bytes": 28084,
+      "sha256": "fe913fe57757081d9a335272086f25bb605af86a022b01d50e4ca7d7a75302a6"
+    },
+    {
+      "path": "figures/Figure_GSE185862_concordance_ephys.png",
+      "size_bytes": 1714597,
+      "sha256": "a05986ac524a68fdfee198a1105bbbbb0a93e12ff30f871f8b34db1855fa1409"
+    },
+    {
+      "path": "figures/Figure_WMB_PCA_baseline_concordance.pdf",
+      "size_bytes": 6473,
+      "sha256": "f800877db2336ceb5b00f166a2625fa69dbd01327c6ee1a13f6bcc86497e2b73"
+    },
+    {
+      "path": "figures/Figure_WMB_PCA_baseline_concordance.png",
+      "size_bytes": 264811,
+      "sha256": "df5bf8bc9480942b9fcbe2f40ac89314715ab0d25b6abfdc35ccdb62ccd97fb8"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__embs.joblib",
+      "size_bytes": 45161213,
+      "sha256": "44aed7e1383e5b45c0d3a59419be6a8eb04e503d3f63f5ea9e54b3902addf837"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__embs_classification_report.csv",
+      "size_bytes": 757,
+      "sha256": "f846f4a26fb10909dee02f33ddf83bf930e6ddf0fe4370af52dde7b90f6d91a7"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__embs_confusion_matrix.csv",
+      "size_bytes": 296,
+      "sha256": "c4fecd341e0adb6b51410ae839a9b6b8a3e52cebf724cfbffc9bde8995946ee3"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__embs_confusion_matrix.png",
+      "size_bytes": 63869,
+      "sha256": "4fec3d65a1f7f60bcf3507f236c14d897ddaa01df29f4a3c9295fedc2b323f91"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__embs_oof_predictions.csv",
+      "size_bytes": 93384,
+      "sha256": "2d39d8dcd844a7c71685bf831a42b0d2d956c2b4f0c30eda4a32646bb37e5c82"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__pcs.joblib",
+      "size_bytes": 72789587,
+      "sha256": "70c14de9f6c97d65b4ae8c5cd086f4c6afdd118138bbe4104cbdcf07357c0545"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__pcs_classification_report.csv",
+      "size_bytes": 761,
+      "sha256": "129c467a5fbd7ea78b5be8bc3c8b66d1e3e1cd180660a1bd474e19d8bcb06a61"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__pcs_confusion_matrix.csv",
+      "size_bytes": 298,
+      "sha256": "7fd5f721f2d4b0449b018045810b0dfcb8075251b9ab4994c76426b558132983"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__pcs_confusion_matrix.png",
+      "size_bytes": 65253,
+      "sha256": "3fe61c0a38285b63a6f640798eeb6ebe5b8ae53ca576f7f2fbe240460861ca39"
+    },
+    {
+      "path": "models/celltype_classifier/extratrees__pcs_oof_predictions.csv",
+      "size_bytes": 94760,
+      "sha256": "fa8d16994d146fc50f0b89948f0549bf1e47cc8be33deeeec1504821d2466622"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__embs.joblib",
+      "size_bytes": 28731,
+      "sha256": "c643a675d4927a206ee742eddac7af6b10a33108ace5e7b67e2af5dc36e85b14"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__embs_classification_report.csv",
+      "size_bytes": 791,
+      "sha256": "1b6b47f8db26a358ce6f1472c4f684a2f211f71d259e79084ed778464c4c25d3"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__embs_confusion_matrix.csv",
+      "size_bytes": 292,
+      "sha256": "5ea4c480cc0f5764672f877c3ac8faaf43dd1315cd6b7a889088e59b8b3e15a9"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__embs_confusion_matrix.png",
+      "size_bytes": 63450,
+      "sha256": "ce1b4b8c892e181f2a2717b2d037f1f36ae8d7e31ca22eebf1c3a95cd58cc9a9"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__embs_oof_predictions.csv",
+      "size_bytes": 268744,
+      "sha256": "733d489d5ea3af412317c44d51e09fd501eefd7feb932acd21f71a2ac0fd4660"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__pcs.joblib",
+      "size_bytes": 24097,
+      "sha256": "6b7dcc6333c84618e64333833bce7b793175dd0e3abd766c921ed907ce9c9191"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__pcs_classification_report.csv",
+      "size_bytes": 746,
+      "sha256": "5adaff8db6d860483b8c59a88e038e572a6ecaa32ce53a802f215dabfb0e2bf8"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__pcs_confusion_matrix.csv",
+      "size_bytes": 297,
+      "sha256": "ec92af8872333d186182990cd426cb1abf7305ef93f5fc334a235747e108f1db"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__pcs_confusion_matrix.png",
+      "size_bytes": 65122,
+      "sha256": "3c089240c4751171c800e3c6928de395c6f1470bc1dbcf4c7b8f40e742ec685b"
+    },
+    {
+      "path": "models/celltype_classifier/logreg__pcs_oof_predictions.csv",
+      "size_bytes": 265333,
+      "sha256": "f3d07c2a009fc7b15aee4977393e65d5ca0121094b4938c011a7055610630f35"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__embs.joblib",
+      "size_bytes": 18785791,
+      "sha256": "5aca2d5149921cd0b146249904b316f2b6c2011b14cb206f7fe6e851bcdcba89"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__embs_classification_report.csv",
+      "size_bytes": 732,
+      "sha256": "80f93d51a8d8ec37239d5307403e7736043bac06b9154747ab9fa0dedb7657d2"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__embs_confusion_matrix.csv",
+      "size_bytes": 296,
+      "sha256": "a856457eb0edf81762a4c76329b70ed481ccbf37b5613de5558304847df77a23"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__embs_confusion_matrix.png",
+      "size_bytes": 63784,
+      "sha256": "f71d6e597af491c2b5fd85c8092f71a539e1fd62b2bf1a3da406c6370fc4a2d9"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__embs_oof_predictions.csv",
+      "size_bytes": 93567,
+      "sha256": "59986eb1602aa05915e1e400e92f9057b1a60797959464a05d93a100a8812ef8"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__pcs.joblib",
+      "size_bytes": 26575189,
+      "sha256": "ac1869b7b095735fbc74aba5abaf7412c2c053ca34e217843d19195afab56fc1"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__pcs_classification_report.csv",
+      "size_bytes": 761,
+      "sha256": "03baf4fd71a2ca2aaf003e5baf98db644f4a8410c7bda9baa66674533adc6abc"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__pcs_confusion_matrix.csv",
+      "size_bytes": 298,
+      "sha256": "cafacfaa67dee3ca72dc3c37508f134f700515e57660affe2995f1cccf535adb"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__pcs_confusion_matrix.png",
+      "size_bytes": 66223,
+      "sha256": "006b5002d0e033af68ff574806be06eb2881a7f7a5c2a7ceed7b00094a4fb8df"
+    },
+    {
+      "path": "models/celltype_classifier/randomforest__pcs_oof_predictions.csv",
+      "size_bytes": 94434,
+      "sha256": "e07f42c7dff9b51661b6e606d856c5530e15e5fb0bf085941dffb5818b0d01ea"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__embs.joblib",
+      "size_bytes": 48412,
+      "sha256": "1cab10f768b7162c0b7c65ed36c182a8af04568bc87fdb24dd86e45d3e15391a"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__embs_oof_predictions.csv",
+      "size_bytes": 101278,
+      "sha256": "5dcbca1df793dda524edac230deb7efcf21e81fcee8f87741cff1cd5c38224db"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__embs_scatter.png",
+      "size_bytes": 110174,
+      "sha256": "053f25411ad9f8f9c3c6ad1f3e6a62ce5e35ded0c3ffda0922fae9d223bc9832"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__pcs.joblib",
+      "size_bytes": 61362,
+      "sha256": "a9040d51c7c57fc2fef1a6652644fc392b457e2f08539f1062563bbf0a6c82b8"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__pcs_oof_predictions.csv",
+      "size_bytes": 101216,
+      "sha256": "affc453672b7493895c213b2b037c83518f94f00ef770ccded13cd53a9ba0b20"
+    },
+    {
+      "path": "models/ephys_regressors/AP_amplitude_mV__pcs_scatter.png",
+      "size_bytes": 109156,
+      "sha256": "ec241ca90a85c8584ee6c61f64f32bdd2ad275ed85e23374c6bbb15afa62fbf7"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__embs.joblib",
+      "size_bytes": 48412,
+      "sha256": "228777a6f38f134d4e2b5b61fa4d061bba952508d6d336f8dbf212fa5a839056"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__embs_oof_predictions.csv",
+      "size_bytes": 106837,
+      "sha256": "5216289f0182e4cab4e3387d1953bbf86af76622d12f76025e8c395c6dacd24e"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__embs_scatter.png",
+      "size_bytes": 73386,
+      "sha256": "458793709adc8bd7e4648a13e9a98c0291758cad1f7f2e8b9daebf1b3b109dc0"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__pcs.joblib",
+      "size_bytes": 61362,
+      "sha256": "119f3d4e0a5576e5289f56c0254a7d95190333cb2a15f67f0de17e11bc966799"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__pcs_oof_predictions.csv",
+      "size_bytes": 107009,
+      "sha256": "03f8478cddc11bf10802cae9a501d6a2c243fb4c01297e96729bc4b6913b6c8a"
+    },
+    {
+      "path": "models/ephys_regressors/AP_threshold_mV__pcs_scatter.png",
+      "size_bytes": 66366,
+      "sha256": "46919b1a6d2e817a4fad9a9ca88956feedb38b8e4be10ced12e787eb484cf746"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__embs.joblib",
+      "size_bytes": 48408,
+      "sha256": "c650bd72b08d8bfa911f3fd7ca3d430490da5f1813c74e24f72343f91550813c"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__embs_oof_predictions.csv",
+      "size_bytes": 104945,
+      "sha256": "02a934532aa946e95986e9f18020cea2a961fb97f19cb8b72ee4736b5a83e040"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__embs_scatter.png",
+      "size_bytes": 94360,
+      "sha256": "e104c23a9da89b224b1d7d3c56d60fcc273e47f4177cf9443d77d9941f5f6384"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__pcs.joblib",
+      "size_bytes": 61358,
+      "sha256": "d41490fc794d89e00ddacce11e4e70cb7e8849f9fcc06f22d422c806c7ed41bc"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__pcs_oof_predictions.csv",
+      "size_bytes": 104938,
+      "sha256": "b4d98e04d8ea1bf80af48c2ab35eeb18ff23261cf2be654a6daf53ef2918f011"
+    },
+    {
+      "path": "models/ephys_regressors/AP_width_ms__pcs_scatter.png",
+      "size_bytes": 93327,
+      "sha256": "6bccc2b214c48ca912cf4a8416b70316968ab03ae370d625ac4b511ec40156c9"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__embs.joblib",
+      "size_bytes": 48422,
+      "sha256": "c55626fb00b1cca9b6a82993a305c21a4bcbe3ba374fb0b8a24ea6c4ee258c9f"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__embs_oof_predictions.csv",
+      "size_bytes": 107807,
+      "sha256": "e61716e3b590d0219204d51cdf7d5a884e5d12ed6a463c71a5a61e43d63e11d3"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__embs_scatter.png",
+      "size_bytes": 122665,
+      "sha256": "c3d64fcf51cca213f69e57035a911c5f1ea641784411a5ca626ecdccb491af4b"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__pcs.joblib",
+      "size_bytes": 61372,
+      "sha256": "251b348641b1f80735051673f18a6af233803280b95499c92d788cee3c00f9ee"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__pcs_oof_predictions.csv",
+      "size_bytes": 107803,
+      "sha256": "896e3c8ca0b3a206179dff7d9e9a85e2bc49eeb614ece9bf65aa002555855589"
+    },
+    {
+      "path": "models/ephys_regressors/Afterhyperpolarization_mV__pcs_scatter.png",
+      "size_bytes": 120575,
+      "sha256": "f32603dc3b65ed068ecb15687fd36e974fade642d60bc0aea05cf1bddea25695"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__embs.joblib",
+      "size_bytes": 48415,
+      "sha256": "de4ce7e126eb4d54494e21caad935b4e8a3e1e43dc6816db5a3ef5a96efa7e6d"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__embs_oof_predictions.csv",
+      "size_bytes": 104227,
+      "sha256": "ee11df3556dd91f89a1b5c4f04232926717cf96df3c406c12d59cb856da000cf"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__embs_scatter.png",
+      "size_bytes": 53706,
+      "sha256": "3111ed28123bde21935abe720ce3072402e3d2142a34f29f9eba378737498604"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__pcs.joblib",
+      "size_bytes": 61365,
+      "sha256": "327530406e687f61a2e49dc50babca2123f38cb50bb225f51c72c9f78d7be7db"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__pcs_oof_predictions.csv",
+      "size_bytes": 104179,
+      "sha256": "dfa361cef603441bad833ee5e622fc01ab20e947ccfc6d65f7b04d7381fa2431"
+    },
+    {
+      "path": "models/ephys_regressors/ISI_adaptation_index__pcs_scatter.png",
+      "size_bytes": 52290,
+      "sha256": "7dea1023d7d1abd0e38973b36e1f46308c91587ae6d49b49668bdca8509b3cf3"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__embs.joblib",
+      "size_bytes": 48418,
+      "sha256": "fa4ef1dd03fde5967016f6e8da66410ad16c06ebaeb3bd7004163643c3d5868c"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__embs_oof_predictions.csv",
+      "size_bytes": 103578,
+      "sha256": "bace02e89b0ede8dab773551981fcc72e27343954d5226c3ae3036e3584f0007"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__embs_scatter.png",
+      "size_bytes": 85355,
+      "sha256": "4a4d926fc4edc415048496cc28eb70fc316ee7c3fd60c586c4f9c90b4ab98bbc"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__pcs.joblib",
+      "size_bytes": 61368,
+      "sha256": "cb4a7600e4c2f7faaf67efebd17ac8e060d558c5ec56e7114c1a08dbd010e23e"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__pcs_oof_predictions.csv",
+      "size_bytes": 103587,
+      "sha256": "1f3f7bf0f38905342615e7cb4715dcd983fd4767ecfcdaf4d62b4c2c9cf7819c"
+    },
+    {
+      "path": "models/ephys_regressors/Input_resistance_MOhm__pcs_scatter.png",
+      "size_bytes": 83491,
+      "sha256": "e77d14d4395678f1d564d9ca5b5c32fb262933e2c3049cdd7c83a0cf0e93fc7e"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__embs.joblib",
+      "size_bytes": 48407,
+      "sha256": "06aabc51181bd3efdc62941a9f5482054f8e0cf2a58b3c6103073d67639c819c"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__embs_oof_predictions.csv",
+      "size_bytes": 96360,
+      "sha256": "0a83b1a4750009820a46a86eac913b1c87278aa7b857c3ffc8887b0d2c7d9af0"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__embs_scatter.png",
+      "size_bytes": 69528,
+      "sha256": "482f05bf828c19d27a4923659b46404c423da3c79b6a4c002804d8d90eddff84"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__pcs.joblib",
+      "size_bytes": 61357,
+      "sha256": "12039f0c15bbefbe87aff66cf95c232087fd4dd7f2654a4c68f74e2ba0f9f75f"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__pcs_oof_predictions.csv",
+      "size_bytes": 96273,
+      "sha256": "c254927ae298416c4ab114a7d17c48aab78dbe3a426c7f0c8287a5c38b90cfff"
+    },
+    {
+      "path": "models/ephys_regressors/Latency_ms__pcs_scatter.png",
+      "size_bytes": 63311,
+      "sha256": "4ae9097c8adbdfe60a11672bdc183bf5b7c2260c2cb199b4d79943ec049659a1"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__embs.joblib",
+      "size_bytes": 48412,
+      "sha256": "9703712fc28f2409284bd8d0bcd742da7a075c53f1bf2807431177d0c7586e63"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__embs_oof_predictions.csv",
+      "size_bytes": 86106,
+      "sha256": "81b77aaa4cbf44092e9d704c2ab6fcc3360009b395affc0a0336a677bf9e54f6"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__embs_scatter.png",
+      "size_bytes": 89689,
+      "sha256": "3ecd6e23c7c11ca7cd6d846a447fb74315829589f58db07ffff921ad724ec9a4"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__pcs.joblib",
+      "size_bytes": 61362,
+      "sha256": "64dfe29a66ca2b43613777a6d902472012996a010e4995f1fdbbcd3901b89b6b"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__pcs_oof_predictions.csv",
+      "size_bytes": 86111,
+      "sha256": "5d77e41b18b8a05bdacc9c60c96a9bc161fd37c77936b451b21a696861122085"
+    },
+    {
+      "path": "models/ephys_regressors/Max_number_of_APs__pcs_scatter.png",
+      "size_bytes": 89754,
+      "sha256": "9446497fc0d111962e357133635874ea8ea6b73c3e74571eb494e7e804786bd5"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__embs.joblib",
+      "size_bytes": 48422,
+      "sha256": "a8662b9421b780bfd36c06ae48acc415388d96cbe68e50b77eeb576f469e893b"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__embs_oof_predictions.csv",
+      "size_bytes": 104150,
+      "sha256": "a050b1211f46bb9e6b6180fa68884ac2d71eda5b8ff5b62e13a6cee7f66e70c5"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__embs_scatter.png",
+      "size_bytes": 84445,
+      "sha256": "ddbdedeafa05d2ff715a9c51897a80c550ac875327420aa7ef141a104d00c069"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__pcs.joblib",
+      "size_bytes": 61372,
+      "sha256": "4cdc1e338e99b4ed8fa21b5d0c781f689564312f7a68d56d0e35e2405a1ccbd8"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__pcs_oof_predictions.csv",
+      "size_bytes": 104288,
+      "sha256": "e15632f74469d02e4a4cc13920b38cfb239afe8f4ea4784b69c78502a83ace87"
+    },
+    {
+      "path": "models/ephys_regressors/Membrane_time_constant_ms__pcs_scatter.png",
+      "size_bytes": 72709,
+      "sha256": "a9ee158daa003c997933921ec47040f141c740b37a5cd3708c4e05cfd14f3a8c"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__embs.joblib",
+      "size_bytes": 48426,
+      "sha256": "f7a41e23cd499b8e71d3002d595f11608dfbf1484b4f5a4883863e134a22fc5b"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__embs_oof_predictions.csv",
+      "size_bytes": 106289,
+      "sha256": "b33a4d87d58b6287a9bfcec11443a1b08197bd851a46946660306e45556798b1"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__embs_scatter.png",
+      "size_bytes": 85377,
+      "sha256": "548b8db4470295b36172e267c93c8726530cad3102f55263d00dc34807610cd2"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__pcs.joblib",
+      "size_bytes": 61376,
+      "sha256": "99890cabd4cb4e5d76a51c3535d43617117a63a69f9a33ae7e648877b109d108"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__pcs_oof_predictions.csv",
+      "size_bytes": 106285,
+      "sha256": "6f695244eb37ac4986e4778cb3879eafcc81fd9c4670e84e18cb317d5aca1f6e"
+    },
+    {
+      "path": "models/ephys_regressors/Resting_membrane_potential_mV__pcs_scatter.png",
+      "size_bytes": 83314,
+      "sha256": "4f647f197adf104dfd7435ea7c2d0f347b5ca3ff825601e54fd1863c53f6efca"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__embs.joblib",
+      "size_bytes": 48408,
+      "sha256": "163bd04891ec2f1ea111716cb7c6fe9a205319237c7200405aaef5fb858abc1b"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__embs_oof_predictions.csv",
+      "size_bytes": 90640,
+      "sha256": "23e59a1d48e67dcb3ba6c9f502b67a601b617db209a17f9dd16c476cd2f8ca31"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__embs_scatter.png",
+      "size_bytes": 78751,
+      "sha256": "15191651e8553faaa914a016fcb3804c87dfae261410874885ee14226ae23717"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__pcs.joblib",
+      "size_bytes": 61358,
+      "sha256": "9920f76634c0a7505ba6d3dafa8630d6b922b82a38f32405bebae7dc0a2a69bc"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__pcs_oof_predictions.csv",
+      "size_bytes": 90591,
+      "sha256": "8a1b3898ca8e76da7b4ae58f6f404b2492d41f5ffcbb9e3259d1a2986eedc6c5"
+    },
+    {
+      "path": "models/ephys_regressors/Rheobase_pA__pcs_scatter.png",
+      "size_bytes": 80597,
+      "sha256": "427465bfb67e5917d7d98f3545082551d169aa3083a52fb9ad27db5b45aecf0e"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__embs.joblib",
+      "size_bytes": 48404,
+      "sha256": "5c5bfbe65f6efa64846ffa742214b796248d503357ae795210f9e6604f976113"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__embs_oof_predictions.csv",
+      "size_bytes": 105272,
+      "sha256": "b9424e913b73917f9049d4ebb31bdf183af808523025142c097b298260ba3b33"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__embs_scatter.png",
+      "size_bytes": 74116,
+      "sha256": "3def697106734cc154b7302190179044b7cb55263a338e224c242aee6e26091d"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__pcs.joblib",
+      "size_bytes": 61354,
+      "sha256": "c854aaeef2653cb0f41b355319ceda4d96c95d6a421ad51f97821931f152eef8"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__pcs_oof_predictions.csv",
+      "size_bytes": 105298,
+      "sha256": "ed283ba1800e5d0f0a2ce603851e8412c8492540bbbeb30a0a80aae93ebf01b8"
+    },
+    {
+      "path": "models/ephys_regressors/Sag_ratio__pcs_scatter.png",
+      "size_bytes": 58863,
+      "sha256": "0859ecd91be18888d8b9ba83d132098ed602a65e9f58236824ad422c566ba6a4"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__embs.joblib",
+      "size_bytes": 48423,
+      "sha256": "a8c581b28203cb464589a2430d223f0aed613a485b01566dd9ea8d10e33175ed"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__embs_oof_predictions.csv",
+      "size_bytes": 104032,
+      "sha256": "58ae14473c35c09bd28f159632292571b20eb3a2edaed71116436d5c471bc130"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__embs_scatter.png",
+      "size_bytes": 111597,
+      "sha256": "4ec04a7ed7f55c33f0d007ec4e78c7bd77197a0a87d25d3b5c04278b6e0e6aa4"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__pcs.joblib",
+      "size_bytes": 61373,
+      "sha256": "5b61e3ec479e7ac61673622f6152244ba04a46aa9ff3dedadb723670da27f7eb"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__pcs_oof_predictions.csv",
+      "size_bytes": 104090,
+      "sha256": "a3efbe8a455056d8537ec12c85ce1a9fde19ba091550c71eec13b6f00581b11b"
+    },
+    {
+      "path": "models/ephys_regressors/Upstroke_to_downstroke_ratio__pcs_scatter.png",
+      "size_bytes": 111216,
+      "sha256": "e3b348e36bd9d19b04c92ecdc754d65a044414cc3f78de0937c9611fcdcd2d10"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/config.json",
+      "size_bytes": 1762,
+      "sha256": "4a4e7bd711a8d2cc28ea197183e382c1218ce9e2a8d13fd4ca79104bb73122f4"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/eval_metrics.json",
+      "size_bytes": 280,
+      "sha256": "839b5493562d544d002c519462489c5d8dcd54f2d60988e5d47835256e82ce64"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/finetune_config.json",
+      "size_bytes": 478,
+      "sha256": "d3cf6044fb469faace507f4697b1f53c9d374a21206eab3d0527736aa775d699"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/model.safetensors",
+      "size_bytes": 72481600,
+      "sha256": "7bd48790a9b70d61e30bb6e161ae0a8f894e5b770ea3f6f8e98d0a1ca32f8b08"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/target_names.csv",
+      "size_bytes": 549,
+      "sha256": "e51f0ee54c9159f1c21bcb8cc9875c14c870f1f8b2d0c3a77c296744ed32ae36"
+    },
+    {
+      "path": "models/mouse_geneformer_finetuned/training_args.bin",
+      "size_bytes": 5432,
+      "sha256": "4c3ffbf5a932284a6c79e14446fed51ea5f25bb2355e856bdc405d5723bc1ff8"
+    },
+    {
+      "path": "pca_baseline/regenerated_results/WMB_PCA_family_concordance_all_cells_only_regenerated.csv",
+      "size_bytes": 287,
+      "sha256": "efb68e64216c237de24a4b2e0274ed343d76277a743202a4884ee95772dcb368"
+    },
+    {
+      "path": "pca_baseline/regenerated_results/WMB_PCA_family_concordance_excluding_finetune_cells_regenerated.csv",
+      "size_bytes": 1244,
+      "sha256": "a377d3d8731e1518daa62314a620fd16dd888079f10e448c11bc9bcee7ac4bc8"
+    },
+    {
+      "path": "pca_baseline/results/pca_concordance_by_class.csv",
+      "size_bytes": 1015,
+      "sha256": "413cc6bd474f4f2b29395b5dc46f881843a29dd586db5f9e6d0ec003be6900d8"
+    },
+    {
+      "path": "pca_baseline/results/pca_concordance_summary.csv",
+      "size_bytes": 172,
+      "sha256": "0496c0cec0a3a724da8dcf750763070fc874b615e33490536b9af214a6b0bbe9"
+    },
+    {
+      "path": "pca_baseline/results/pca_vs_geneformer_cv_benchmark.csv",
+      "size_bytes": 209,
+      "sha256": "09c74f97251d9ed99aea7bbb30c4f35732dd9ab89fa65efa002296916f575749"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_Isocortex-1_predictions.csv",
+      "size_bytes": 31986871,
+      "sha256": "dc68a612b4e4bb412982b0efd258171e72ed816c646fd1c8a4b89f2a8a58ab31"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_Isocortex-2_predictions.csv",
+      "size_bytes": 31092856,
+      "sha256": "75dcca7b63de412492a594dc024a9cdf83bd1b1289b2e5b84eacf38736c4f707"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_accuracy_by_threshold.csv",
+      "size_bytes": 114,
+      "sha256": "7660b485a19661b4dd0ff62ae763db7eb6042de0f0695372780bf109505a76cc"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_accuracy_per_family.csv",
+      "size_bytes": 709,
+      "sha256": "dc8fc060a97a4a04ebb314e2c492b3e496c86b5da4ff74ff5a6153503049711d"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_accuracy_per_subclass.csv",
+      "size_bytes": 498,
+      "sha256": "ec0c6d8b4a43946b6a6154afee782f9fa02987823fefe1303f0ea40c591b61be"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_combined_predictions.csv",
+      "size_bytes": 76738248,
+      "sha256": "fd7a6ed1187582c03d6d49e8eedadcf905b60540922f2c5c55a891a1dcc8d9f7"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_confusion_counts.csv",
+      "size_bytes": 258,
+      "sha256": "950b97ec53c98319bbf623a932caae0f04dbaf61e2f00f23e524278853354b65"
+    },
+    {
+      "path": "pca_baseline/results/pca_wmb_cv_summary.csv",
+      "size_bytes": 78,
+      "sha256": "407fd1fae13afee4aadf789e38e484fa7edfbcabaa4248b7d41c63750c45f799"
+    },
+    {
+      "path": "results/gse185862/GSE185862_downstream_PREPS_direct_concordance_current_16k.csv",
+      "size_bytes": 526,
+      "sha256": "3376e20076dd4d6f4987b7ceb8a85b8be15cc22a91b69fd9197ee1a5c4a5f557"
+    },
+    {
+      "path": "results/gse185862/GSE185862_downstream_PREPS_direct_true_family_x_pred_current_16k.csv",
+      "size_bytes": 270,
+      "sha256": "4d4dd9d0057afe8aebc1b92f3759a4c5e1f106315ec2f13efb45f200cb363e90"
+    },
+    {
+      "path": "results/gse185862/GSE185862_finetuned_mouse_geneformer_argmax_concordance_current_16k.csv",
+      "size_bytes": 466,
+      "sha256": "1160e742f604eca3a72ab55a40aec02a2e4edf510eb690b2d7285ceffbcc0858"
+    },
+    {
+      "path": "results/gse185862/M1_vs_GSE185862_current_16k_ephys_correlation_pairs.csv",
+      "size_bytes": 4341,
+      "sha256": "211f34e61ba2be154571419da97334abeb9804c7b47ec6342147387fac80973e"
+    },
+    {
+      "path": "results/gse185862/M1_vs_GSE185862_current_16k_ephys_correlation_summary.csv",
+      "size_bytes": 169,
+      "sha256": "60bfb325c49a0f17db9b313464f67a91bd723ca366d841af8704d238258cb22b"
+    },
+    {
+      "path": "results/gse185862/M1_vs_GSE185862_previous_models_ephys_correlation_summary.csv",
+      "size_bytes": 168,
+      "sha256": "904266727e74bf15ed2c89aa57f6c58f3f38f662f88e2023568041af51336cd6"
+    },
+    {
+      "path": "results/gse185862/current_16k_gse_summary_manifest.json",
+      "size_bytes": 1425,
+      "sha256": "d560a3f6bf1e9f5c2a5a4de536770e19214194eb919ca30078ea7d1070f2bfeb"
+    },
+    {
+      "path": "results/gse185862/gse185862_downstream_PREPS_direct_logreg_embs_predictions_current_16k.csv",
+      "size_bytes": 18554006,
+      "sha256": "10768819a271c671841a91e94ef58a169d46ee81d6441ab2b3aaaa5b8c4d7394"
+    },
+    {
+      "path": "results/gse185862/gse185862_ssv4_predicted_ephys_by_CTX_neuronal_mapped_labels_mean_ephys_by_label.csv",
+      "size_bytes": 1793,
+      "sha256": "2b88bcb6a465d65ecb08a672cd21eea1f640519f1b3ddb1c9b28bdae4a47ad80"
+    },
+    {
+      "path": "results/gse185862/gse185862_ssv4_predicted_ephys_by_subclass_label_mean_ephys_by_label.csv",
+      "size_bytes": 8519,
+      "sha256": "883a674c51a5e6ee15f50891c7655f35bbcd285d311d4896e023c8ad48efba6c"
+    },
+    {
+      "path": "results/gse185862/gse185862_ssv4_predicted_ephys_embs.csv",
+      "size_bytes": 22471596,
+      "sha256": "04c67cde00d61336f5565774bc244fd5038ca94c98966c4444c9ee645415d0ce"
+    },
+    {
+      "path": "results/pca_baseline_regenerated/WMB_PCA_family_concordance_all_cells_only_regenerated.csv",
+      "size_bytes": 287,
+      "sha256": "efb68e64216c237de24a4b2e0274ed343d76277a743202a4884ee95772dcb368"
+    },
+    {
+      "path": "results/pca_baseline_regenerated/WMB_PCA_family_concordance_excluding_finetune_cells_regenerated.csv",
+      "size_bytes": 1244,
+      "sha256": "a377d3d8731e1518daa62314a620fd16dd888079f10e448c11bc9bcee7ac4bc8"
+    },
+    {
+      "path": "results/source_tables/DotPlot_M1_patchseq_real_ephys_CTX_M1_family_matched.medians.csv",
+      "size_bytes": 1618,
+      "sha256": "843845582fee2a565eaf3057ba4551fc3486f7ad6378b8e58688e75e8a462ed4"
+    },
+    {
+      "path": "results/source_tables/DotPlot_M1_patchseq_real_ephys_CTX_M1_family_matched.ncells.csv",
+      "size_bytes": 82,
+      "sha256": "3362bbf8eff750b48efc85b833b35ead7341977dd16fcb116c1de1faab5a1078"
+    },
+    {
+      "path": "results/source_tables/DotPlot_M1_patchseq_real_ephys_CTX_M1_family_matched.scaled01.csv",
+      "size_bytes": 1460,
+      "sha256": "ae3d5d23de2d1ac5b004263cf5a4a0f1c59526d3dba78ae33bfdb6085fc60d46"
+    },
+    {
+      "path": "results/source_tables/DotPlot_WMB_originalPREPS_CTX_M1_family_matched_predicted_ephys.medians.csv",
+      "size_bytes": 1713,
+      "sha256": "f023ec624e39d55ee7abfab00cf033cdc9b4342ab5a181615054760911509af8"
+    },
+    {
+      "path": "results/source_tables/DotPlot_WMB_originalPREPS_CTX_M1_family_matched_predicted_ephys.ncells.csv",
+      "size_bytes": 95,
+      "sha256": "c09031e5d1671641528edd511c86d8333da065ca722b2d51121a2800d0815837"
+    },
+    {
+      "path": "results/source_tables/DotPlot_WMB_originalPREPS_CTX_M1_family_matched_predicted_ephys.scaled01.csv",
+      "size_bytes": 1475,
+      "sha256": "3b5d6b0cd2b4fe78339e2362f7d9a975457c0405f1a23fe42e2656bb4dffd3c9"
+    },
+    {
+      "path": "results/source_tables/GSE185862_direct_CTX_M1_family_concordance_no_PCA.csv",
+      "size_bytes": 746,
+      "sha256": "e11473e13a69c8ff1f77f5f2313988e7d4cbeb804e1911b8eb449d0576b9b037"
+    },
+    {
+      "path": "results/source_tables/GSE185862_direct_per_subclass_concordance_p0.5.csv",
+      "size_bytes": 819,
+      "sha256": "a5c9a8a25ee51f826e83d2c78792854698090478f7fe7e43e8b7f8b397ace8f0"
+    },
+    {
+      "path": "results/source_tables/GSE185862_ephys_cascade_family_concordance_p0.5.csv",
+      "size_bytes": 329,
+      "sha256": "082cfc529e6ee02ece71c0cf3c8eec2be202671eb3a4b4c7140c2c8333f7949f"
+    },
+    {
+      "path": "results/source_tables/M1_vs_WMB_ephys_correlation_summary.csv",
+      "size_bytes": 284,
+      "sha256": "860aca49a3bcc70e9f075039d35cbe5b8f77d5c7a8fb9d1b097c96d480993bd0"
+    },
+    {
+      "path": "results/source_tables/M1_vs_WMB_ephys_per_feature_correlations.csv",
+      "size_bytes": 1056,
+      "sha256": "289c1f55716dad5915b5320c461fd299fdacb4b47a6576d563e5d49f17152b4b"
+    },
+    {
+      "path": "results/source_tables/WMB_direct_CTX_M1_family_concordance_no_PCA.csv",
+      "size_bytes": 941,
+      "sha256": "36ea00d48b53c4b6bd9a7d30836abdc423a4b4d0e202f5f871d5736b3dee0c76"
+    },
+    {
+      "path": "results/source_tables/WMB_direct_per_subclass_concordance_p0.5.csv",
+      "size_bytes": 979,
+      "sha256": "065b7fcb6452367c8aae152c78cadaa954bc6e9c5d22b5f42f4b6c884aa72eaf"
+    },
+    {
+      "path": "results/source_tables/WMB_ephys_cascade_family_concordance_p0.5.csv",
+      "size_bytes": 337,
+      "sha256": "65023ab96a39701ae86b0672ade6ab376a540d23c40bb135dd8ce08761ac3be1"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/logreg__embs__subclass_concordance.csv",
+      "size_bytes": 981,
+      "sha256": "b685448568411fd9bd9296ec0f36fd126df5b3d8f4e687ba71ed5aa7b90c437c"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/logreg__embs_class_x_pred_in_distribution.csv",
+      "size_bytes": 229,
+      "sha256": "f4332b3569bc2a990e2b3b3d6fd956c1bb2ab27c9f4214fc9820e2dcd6a96443"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/logreg__embs_concordance_by_class.csv",
+      "size_bytes": 1135,
+      "sha256": "41952067a9c2de19dad6989a7529da570fc9cc692905ee2fe65785ca4339ea0b"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/logreg__embs_concordance_summary.csv",
+      "size_bytes": 205,
+      "sha256": "28eababbee37cf2c3f7f0fada76bf256f601cabdfdcb63d696bf93fc731fe59a"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/subclass_concordance_all_tags.csv",
+      "size_bytes": 981,
+      "sha256": "b685448568411fd9bd9296ec0f36fd126df5b3d8f4e687ba71ed5aa7b90c437c"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/subclass_concordance_overall.csv",
+      "size_bytes": 126,
+      "sha256": "2e05a972aff770923f2a3cda09e3f3ac74989fb02ee371a4748e3652a021782f"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/wmb_isocortex_1_embeddings__logreg__embs_predictions.csv",
+      "size_bytes": 68225294,
+      "sha256": "93585122da3a0752a25e488f69a24d1cf97c8e9ff3c5bdd6ac73d183c3aa2965"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/wmb_isocortex_2_embeddings__logreg__embs_predictions.csv",
+      "size_bytes": 66066874,
+      "sha256": "fa323e221cf1aafa2fd35c1d35459f17c6ec9d9f8d9e524af06eb5fe370577e4"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/wmb_isocortex_combined__logreg__embs_class_x_pred.csv",
+      "size_bytes": 893,
+      "sha256": "2cd1470fd3fdc834b6cba01ba110105ed73b63f789d2a59842d2e0ccd59d7142"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/wmb_isocortex_combined__logreg__embs_predictions.csv",
+      "size_bytes": 146616381,
+      "sha256": "6596b6f84752791279e7b099f060fef71bca6d01b27d57a092e798fc7ebb2c70"
+    },
+    {
+      "path": "results/wmb/celltype_wmb_predictions/wmb_isocortex_combined__logreg__embs_subclass_x_pred.csv",
+      "size_bytes": 4365,
+      "sha256": "0ebdc8e362a520094d2b4c7fbf5cbd985ac7648b3310bb6760bac13a8d514a74"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/confidence/ephys_feature_reliability.csv",
+      "size_bytes": 1413,
+      "sha256": "07cc61d4ecc21d9647be51720f32128257e231a9aa992397d15f7d43d40395b9"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/confidence/wmb_predicted_ephys_with_confidence_embs.csv",
+      "size_bytes": 258780397,
+      "sha256": "a0b062cd87445443428dd2847cf8c424058dc1fb769328403fb94775eb910bb0"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family.means.csv",
+      "size_bytes": 1904,
+      "sha256": "15353f2b56fdd9d9f6917d67727a1b1c92115a075c7b04cda6fd1d3c8298a897"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family.ncells.csv",
+      "size_bytes": 103,
+      "sha256": "b10ea116bb1d36671d68101a93f23a0282d0df742db5b6b93c073a1894b3ed3e"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family.png",
+      "size_bytes": 330463,
+      "sha256": "07d664344dc298d1a9b85481e39545e39a2bc09ab258110225425b370513aa29"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family.scaled01.csv",
+      "size_bytes": 1685,
+      "sha256": "acd07356213bcf93f8286c61eca9b0ab58f11660f0ff53e2ae2bb64da99b1fd9"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family_median.medians.csv",
+      "size_bytes": 1172,
+      "sha256": "697648ecfbac0df22198b8e4d84bd64f0a252c737c8d8963ca32ddd927f778e4"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family_median.ncells.csv",
+      "size_bytes": 103,
+      "sha256": "b10ea116bb1d36671d68101a93f23a0282d0df742db5b6b93c073a1894b3ed3e"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family_median.png",
+      "size_bytes": 336601,
+      "sha256": "85e29835af5cff4a97dd5d1315622087e64a53ac050691af8bebad448a73afc4"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_by_family_median.scaled01.csv",
+      "size_bytes": 1670,
+      "sha256": "3716b62d0c3cdabb4c2d36b5d57a6f95f34901a0698d94caf535ff1cdaa56bc3"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.means.csv",
+      "size_bytes": 1828,
+      "sha256": "684f6ec307e9142ca5f0cad3875e5e7331a15ced13577c70368be8c5f61710bf"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.medians.csv",
+      "size_bytes": 2453,
+      "sha256": "8d06a32b55f4a6459c96a9a050a41c97f4c329906c6de8efef9c053438f89411"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.ncells.csv",
+      "size_bytes": 342,
+      "sha256": "8b3e7e5442d7abf95f841264919e84509e83470392e32d916dba59955aae631e"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.png",
+      "size_bytes": 385490,
+      "sha256": "c455dd3f6db7d2bc1537c5977aec7958af599160c3ebdd8ca02dd6847057c131"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.scaled01.csv",
+      "size_bytes": 2914,
+      "sha256": "d0bcec825a1ffaaec0047c86afa7bafa3c483073997faf87b2742aaebe038f7b"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/predicted_ephys_dotplot_ctx.zscores.csv",
+      "size_bytes": 4089,
+      "sha256": "27a096614db791ced64b95bd0a3f2c378763b367e461d568de87c6cdfd3f7805"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/wmb_isocortex_1_embeddings_predicted_ephys_embs.csv",
+      "size_bytes": 52799071,
+      "sha256": "e1b891262e3eb7b0f595773332012dacb5e7a1d75555cba3ebd089e07190ed19"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/wmb_isocortex_2_embeddings_predicted_ephys_embs.csv",
+      "size_bytes": 50592653,
+      "sha256": "49534542a285e053eef61b562b8973aac78409b02f594a3abcb94ecde5d11918"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/wmb_isocortex_combined_predicted_ephys_embs.csv",
+      "size_bytes": 115715767,
+      "sha256": "26aa8dce850454ff02c3d231c92c7710f7c6868f67ed9ecab24f19c0bb539337"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/wmb_isocortex_combined_summary_by_class_embs.csv",
+      "size_bytes": 9026,
+      "sha256": "ebfa483817e501db5f537101baa35605ad011b72b408f49f9d28879fda1d3c7f"
+    },
+    {
+      "path": "results/wmb/ephys_wmb_predictions/wmb_isocortex_combined_summary_by_subclass_embs.csv",
+      "size_bytes": 38021,
+      "sha256": "95bed37a5ac897862d1a8a43c20d6f891d8634949c305d3371126f35105fb6f5"
+    },
+    {
+      "path": "results/wmb/wmb_finetune_exclusion_summaries/M1_vs_WMB_excluding_finetune_ephys_correlation_summary.csv",
+      "size_bytes": 170,
+      "sha256": "96eb311a5e19138f16573411e9a1f5f997a8b634cd6ccd14139cf9ec738dcf29"
+    },
+    {
+      "path": "results/wmb/wmb_finetune_exclusion_summaries/WMB_M1_family_concordance_excluding_finetune_cells.csv",
+      "size_bytes": 1282,
+      "sha256": "dfceb1be6a64310c909aed2530f9e561e7322ca50eff924a4ea5cd087aa7310c"
+    },
+    {
+      "path": "results/wmb/wmb_finetune_exclusion_summaries/WMB_M1_family_concordance_excluding_finetune_cells_all_cells_only.csv",
+      "size_bytes": 678,
+      "sha256": "263d787e503be4a644a3e5f4bf5acc0bb9f9868a7e4c6bab948b15fd3984d749"
+    },
+    {
+      "path": "results/wmb/wmb_finetune_exclusion_summaries/WMB_PCA_family_concordance_excluding_finetune_cells.csv",
+      "size_bytes": 1244,
+      "sha256": "a377d3d8731e1518daa62314a620fd16dd888079f10e448c11bc9bcee7ac4bc8"
+    },
+    {
+      "path": "results/wmb/wmb_finetune_exclusion_summaries/wmb_m1_family_finetune_cell_ids.csv",
+      "size_bytes": 530894,
+      "sha256": "3f8cbd5d920eeb2f384a34f3ceeaa5c1eee4dd3d838bd6960aec85e593f676e4"
+    },
+    {
+      "path": "results/wmb_finetune_exclusion/M1_vs_WMB_excluding_finetune_ephys_correlation_summary.csv",
+      "size_bytes": 170,
+      "sha256": "96eb311a5e19138f16573411e9a1f5f997a8b634cd6ccd14139cf9ec738dcf29"
+    },
+    {
+      "path": "results/wmb_finetune_exclusion/WMB_M1_family_concordance_excluding_finetune_cells.csv",
+      "size_bytes": 1282,
+      "sha256": "dfceb1be6a64310c909aed2530f9e561e7322ca50eff924a4ea5cd087aa7310c"
+    },
+    {
+      "path": "results/wmb_finetune_exclusion/WMB_M1_family_concordance_excluding_finetune_cells_all_cells_only.csv",
+      "size_bytes": 678,
+      "sha256": "263d787e503be4a644a3e5f4bf5acc0bb9f9868a7e4c6bab948b15fd3984d749"
+    },
+    {
+      "path": "results/wmb_finetune_exclusion/WMB_PCA_family_concordance_excluding_finetune_cells.csv",
+      "size_bytes": 1244,
+      "sha256": "a377d3d8731e1518daa62314a620fd16dd888079f10e448c11bc9bcee7ac4bc8"
+    },
+    {
+      "path": "results/wmb_finetune_exclusion/wmb_m1_family_finetune_cell_ids.csv",
+      "size_bytes": 530894,
+      "sha256": "3f8cbd5d920eeb2f384a34f3ceeaa5c1eee4dd3d838bd6960aec85e593f676e4"
+    },
+    {
+      "path": "scripts/plot_gse185862_main_figure.R",
+      "size_bytes": 9254,
+      "sha256": "be504b5f942b4c2369e06b4eef91f968657de7cdc0f653792dacf6fc82b99d6f"
+    },
+    {
+      "path": "scripts/plot_pca_baseline_wmb_concordance.R",
+      "size_bytes": 5010,
+      "sha256": "31648abb9d75c302c5e1e91d155315147c756c6dd05d04aa61d1a789affc6139"
+    },
+    {
+      "path": "scripts/reference_plot_wmb_main_figure_original.R",
+      "size_bytes": 15918,
+      "sha256": "0235aeb70c1ec65ea30d50d0e09122c6510b4f805834450a2204b1faa3e730b9"
+    },
+    {
+      "path": "scripts/run_pca_m1_cv_baseline.py",
+      "size_bytes": 3786,
+      "sha256": "9400455bc2fef9ef6c8ba82b0b79e5b661300611edd5fc3b8dd6b71dab8c3271"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/extratrees__embs.joblib",
+      "size_bytes": 45161213,
+      "sha256": "f8290604940c2705d90cb8fa4c88b4498d2a9048fee09317a12c590393c83a9c"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/extratrees__embs_oof_predictions.csv",
+      "size_bytes": 32738,
+      "sha256": "dfe5789564f945cdda5ee709f594e2ec0cdb4757e67a58b4299bc9de367e45be"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/extratrees__pcs.joblib",
+      "size_bytes": 72797659,
+      "sha256": "3023085fae90eeac42a092b204f3b869ca116e041a5c9ac1731e20b47069a962"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/extratrees__pcs_oof_predictions.csv",
+      "size_bytes": 32762,
+      "sha256": "76e3f8576713921cb45fe2e68e2538e2bfbecc8bc2927c31d86f96c60d52dc06"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/logreg__embs.joblib",
+      "size_bytes": 28731,
+      "sha256": "17a829cfcc190bea2f46b231afd0c4718bb10cbe1075236e206026c88f8fb55f"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/logreg__embs_oof_predictions.csv",
+      "size_bytes": 32759,
+      "sha256": "cf074cbf3c56e47e14a986071a44111e18678f833a0a2a53168898729d22d980"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/logreg__pcs.joblib",
+      "size_bytes": 37561,
+      "sha256": "a83fcf47213e8601362ecc740c76f9b766080755d6cf1c5a95dbfe8e2a754be4"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/logreg__pcs_oof_predictions.csv",
+      "size_bytes": 32746,
+      "sha256": "dae79dbd03af72ed6afcfd33457be32ada33bc3a2d40b9dcc5de9b7ee5fea014"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/randomforest__embs.joblib",
+      "size_bytes": 18789887,
+      "sha256": "fadd0d3e5969ca2ad36b3bce66ce9d8f2e37d2efb0c59ca59fb468989e6561a7"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/randomforest__embs_oof_predictions.csv",
+      "size_bytes": 32732,
+      "sha256": "1d30cecba3de1b104e87fbca5e90b03565548bb8b44110af99532dd17719e87e"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/randomforest__pcs.joblib",
+      "size_bytes": 26590685,
+      "sha256": "42d35bc7ed3007082dea83446d7f649bb300a0eea5dab2ae6890a140b4d971d7"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/randomforest__pcs_oof_predictions.csv",
+      "size_bytes": 32784,
+      "sha256": "febe33f4da232989dedaf5a46161d5288e6cce88a5131248e31c07484b07851a"
+    },
+    {
+      "path": "trained_models_from_code/celltype_classifier/summary.csv",
+      "size_bytes": 542,
+      "sha256": "924eeea91682d029d45244f5912c6b832cca12bdfb1834004a70349a6a5f9b50"
+    }
+  ]
+}
